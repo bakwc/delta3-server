@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(onClick()));
     serv = new QTcpServer(this);
-    serv->listen(QHostAddress::LocalHost, 1234);
+    serv->listen(QHostAddress::LocalHost, 31337);
     connect(serv, SIGNAL(newConnection()), this, SLOT(slotNewConnection()));
 //    QProcess* process = new QProcess(this);
 //    process->start("cmd");
