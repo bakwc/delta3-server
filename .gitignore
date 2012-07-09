@@ -1,0 +1,15 @@
+# .gitignore
+
+server-*/
+server/debug*/
+server/release*/
+
+ui_*.h
+*.qm
+
+Makefile*
+*.user*
+
+*.bak
+*.tmp
+*~
