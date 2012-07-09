@@ -135,10 +135,11 @@ bool Client::parseTransmit(const QByteArray& data)
     QByteArray cmd=re.cap(3).toLocal8Bit();
     cmd=cmd.left(packetLen);
 
-    cmd=QString("f:%1:%2:%3:")
+    auto strCmd=QString("f:%1:%2:")
             .arg(getId())
-            .arg(cmd.size())
-            .arg((QString)cmd);
+            .arg(cmd.size());
+
+    cmd=strCmd.toLocal8Bit()+cmd+':';
 
     if (re.cap(3).size()<packetLen)
         return false;
