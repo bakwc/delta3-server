@@ -1,7 +1,7 @@
 #include "client.h"
 
-Client::Client(QTcpSocket *socket):
-    QObject(0),
+Client::Client(QTcpSocket *socket, QObject *parent):
+    QObject(parent),
     socket_(socket)
 {
     connect(socket_,SIGNAL(readyRead()),

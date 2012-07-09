@@ -8,7 +8,7 @@ class Client: public QObject
 {
     Q_OBJECT
 public:
-    Client(QTcpSocket *socket);
+    Client(QTcpSocket *socket, QObject *parent=0);
     void send(const QByteArray &cmd);
     qint32 getId();
 private slots:

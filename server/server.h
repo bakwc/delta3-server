@@ -6,7 +6,7 @@
 #include <QMap>
 #include "client.h"
 
-typedef QMap<qint32,Client> Clients;
+typedef QMap<qint32,Client*> Clients;
 
 class Server: public QObject
 {

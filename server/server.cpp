@@ -20,6 +20,8 @@ bool Server::start()
 void Server::onNewConnection()
 {
     qDebug() << "Server::onNewConnection(): new anonymous user connected";
-    Client client(tcpServer_->nextPendingConnection());
-    clients_.insert(client.getId(),client);
+    Client *client=new Client(
+                tcpServer_->nextPendingConnection(),
+                this);
+    clients_.insert(client->getId(),client);
 }
