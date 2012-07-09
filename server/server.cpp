@@ -25,3 +25,25 @@ void Server::onNewConnection()
                 this);
     clients_.insert(client->getId(),client);
 }
+
+QString Server::listConnectedClients()
+{
+    QString result;
+
+    for (auto i=clients_.begin();i!=clients_.end();i++)
+        if (i.value()->getStatus()==ST_CLIENT)
+            result+=QString("%1;%2;")
+                    .arg(i.key())
+                    .arg(i.value()->getIdHash());
+    return result;
+}
+
+Clients::iterator Server::searchClient(qint32 clientId)
+{
+    return clients_.find(clientId);
+}
+
+Clients::iterator Server::clientEnd()
+{
+    return clients_.end();
+}

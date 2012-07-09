@@ -15,6 +15,9 @@ public:
     Server(QObject* parent = 0);
     ~Server();
     bool start();
+    QString listConnectedClients();
+    Clients::iterator searchClient(qint32 clientId);
+    Clients::iterator clientEnd();
 private slots:
     void onNewConnection();
 private:
