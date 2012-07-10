@@ -122,13 +122,16 @@ bool Client::parseList(const QByteArray& data)
 
 bool Client::parseTransmit(const QByteArray& data)
 {
-    if (this->status_!=ST_CONNECTED)
+    if ( !(this->status_==ST_ADMIN ||
+           this->status_==ST_CLIENT))
         return false;
 
-    QRegExp re("t:(\\d+):(\\d+):(*)");
+    QRegExp re("t:(\\d+):(\\d+):(.*)");
 
     if (re.indexIn(data)==-1)
         return false;
+
+    qDebug() << "re worked!";
 
     qint32 packetLen=re.cap(2).toInt();
     qint32 clientId=re.cap(1).toInt();
