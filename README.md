@@ -1,6 +1,7 @@
 Delta3 server
 ========
 Universal remote control system
+Серверная часть
 
 #### Описание
   Delta3 - Универсальная система дистанционного
@@ -9,5 +10,5 @@ Universal remote control system
 или смартфонами.
 
 #### Подробнее
-  Более подробная информация в файле info.txt
-  Описание протокола в файле protocol.txt
+  Более подробная информация: https://github.com/bakwc/delta3-server/blob/master/info.txt
+  Описание протокола: https://github.com/bakwc/delta3-server/blob/master/protocol.txt
