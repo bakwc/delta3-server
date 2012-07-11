@@ -29,11 +29,11 @@ public:
 private slots:
     void onDataReceived();
 private:
-    void parseData(const QByteArray& data);
-    bool parseClientAuth(const QByteArray& data);
-    bool parseAdminAuth(const QByteArray& data);
-    bool parseList(const QByteArray& data);
-    bool parseTransmit(const QByteArray& data);
+    void parseData(const QString &data);
+    bool parseClientAuth(const QString& data);
+    bool parseAdminAuth(const QString& data);
+    bool parseList(const QString& data);
+    bool parseTransmit(const QString& data);
     Server *getServer();
 private:
     ClientStatus status_;
