@@ -20,6 +20,11 @@ void Client::send(const QString &cmd) const
     socket_->write(cmd.toLocal8Bit());
 }
 
+void Client::sendPing() const
+{
+    this->send(QString("p:"));
+}
+
 void Client::onDataReceived()
 {
     QString data = QString::fromLocal8Bit(socket_->readAll());
@@ -44,6 +49,7 @@ ClientStatus Client::getStatus() const
 
 void Client::parseData(const QString& data)
 {
+    this->setSeen();
     parseClientAuth(data);
     parseAdminAuth(data);
     parseList(data);
@@ -69,6 +75,8 @@ bool Client::parseClientAuth(const QString &data)
 
     qDebug() << "parseClientAuth(): new client:"
              << re.cap(2);
+
+    this->getServer()->resendListToAdmins();
 
     return true;
 }
@@ -98,6 +106,20 @@ bool Client::parseAdminAuth(const QString &data)
     return true;
 }
 
+bool Client::parseDisconnect(const QString& data)
+{
+    if (this->status_==ST_DISCONNECTED)
+        return false;
+
+    QRegExp re("d:");
+    if (re.indexIn(data)==-1)
+        return false;
+
+    this->disconnectFromHost();
+
+    return true;
+}
+
 
 bool Client::parseList(const QString &data)
 {
@@ -111,11 +133,7 @@ bool Client::parseList(const QString &data)
 
     qDebug() << "parseList():";
 
-    QString response;
-    response=getServer()->listConnectedClients();
-
-    response=QString("l:%1:").arg(response);
-    this->send(response);
+    this->sendList(getServer()->listConnectedClients());
 
     return true;
 }
@@ -159,4 +177,28 @@ bool Client::parseTransmit(const QString &data)
 Server* Client::getServer()
 {
     return static_cast<Server*>(parent());
+}
+
+quint32 Client::getLastSeen() const
+{
+    return time(NULL)-lastSeen_;
+}
+
+void Client::setSeen()
+{
+    lastSeen_=time(NULL);
+}
+
+void Client::disconnectFromHost()
+{
+    qDebug() << "disconnectFromHost()";
+    socket_->disconnectFromHost();
+    this->status_=ST_DISCONNECTED;
+    this->getServer()->resendListToAdmins();
+}
+
+void Client::sendList(const QString& list)
+{
+    QString response=QString("l:%1:").arg(list);
+    this->send(response);
 }

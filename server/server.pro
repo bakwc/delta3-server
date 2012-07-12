@@ -23,4 +23,5 @@ SOURCES += main.cpp \
 HEADERS += \
     server.h \
     application.h \
-    client.h
+    client.h \
+    defines.h
