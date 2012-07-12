@@ -1,5 +1,6 @@
 #pragma once
 #include <QCoreApplication>
+#include <QTextCodec>
 #include "server.h"
 
 class Application: public QCoreApplication

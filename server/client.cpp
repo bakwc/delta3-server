@@ -11,7 +11,7 @@ Client::Client(QTcpSocket *socket, QObject *parent):
 }
 
 void Client::send(const QByteArray &cmd) const
-{
+{  
     socket_->write(cmd);
 }
 
@@ -23,7 +23,7 @@ void Client::send(const QString &cmd) const
 void Client::onDataReceived()
 {
     QString data = QString::fromLocal8Bit(socket_->readAll());
-    qDebug() << "onDataReceived():" << data;
+    qDebug() << "onDataReceived():";
     parseData(data);
 }
 
@@ -129,8 +129,6 @@ bool Client::parseTransmit(const QString &data)
     QRegExp re("t:(\\d+):(\\d+):(.*)");
     if (re.indexIn(data)==-1)
         return false;
-
-    qDebug() << "re worked!";
 
     qint32 packetLen=re.cap(2).toInt();
     qint32 clientId=re.cap(1).toInt();
