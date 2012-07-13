@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QRegExp>
 #include <ctime>
+#include "defines.h"
 
 enum ClientStatus
 {
@@ -23,28 +24,53 @@ class Client: public QObject
 public:
     Client(QTcpSocket *socket, QObject *parent=0);
     void send(const QByteArray &cmd) const;
-    void send(const QString &cmd) const;
     void sendPing() const;
-    qint32 getId() const;
-    QString getIdHash() const;
+    qint16 getId() const;
+    QByteArray getIdHash() const;
     ClientStatus getStatus() const;
     quint32 getLastSeen() const;
     void setSeen();
     void disconnectFromHost();
-    void sendList(const QString &list);
+    void sendList(const QByteArray &list);
 private slots:
     void onDataReceived();
 private:
-    void parseData(const QString &data);
-    bool parseClientAuth(const QString& data);
-    bool parseAdminAuth(const QString& data);
-    bool parseList(const QString& data);
-    bool parseTransmit(const QString& data);
-    bool parseDisconnect(const QString& data);
+    void parseClientAuth();
+    void parseAdminAuth();
+    void parseList();
+    void parseTransmit();
+    void parseDisconnect();
+    void parsePing();
+
     Server *getServer();
+
+    qint8 getProtoId();
+    qint8 getProtoVerstion();
+    Cspyp1Command getCommand();
+    QByteArray getClientHash();
+    QString getAdminLogin();
+    QString getAdminPassword();
+    qint32 getPacketLength();
+    qint16 getClientId();
+    QByteArray getPacketData();
+
+private:
+    struct ClientInfo
+    {
+        QByteArray hash;
+    };
+
+    struct AdminInfo
+    {
+        QString login;
+        QString pass;
+    };
+
 private:
     quint32 lastSeen_;   //timestamp
     ClientStatus status_;
     QTcpSocket* socket_;
-    QString clientIdHash_;
+    void* clientInfo_;  // pointer to info
+    QByteArray buf_;
 };
+
