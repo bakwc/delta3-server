@@ -27,15 +27,15 @@ void Server::onNewConnection()
     clients_.insert(client->getId(),client);
 }
 
-QString Server::listConnectedClients()
+QByteArray Server::listConnectedClients()
 {
-    QString result;
-
+    QByteArray result;
     for (auto i=clients_.begin();i!=clients_.end();i++)
         if (i.value()->getStatus()==ST_CLIENT)
-            result+=QString("%1;%2;")
-                    .arg(i.key())
-                    .arg(i.value()->getIdHash());
+        {
+            result.append( toBytes(i.key()) );
+            result.append( i.value()->getIdHash() );
+        }
     return result;
 }
 
@@ -74,7 +74,7 @@ void Server::timerEvent( QTimerEvent* event )
 void Server::resendListToAdmins()
 {
     qDebug() << "Sending list!";
-    QString clientList=listConnectedClients();
+    QByteArray clientList=listConnectedClients();
     for (auto i=clients_.begin();i!=clients_.end();i++)
         if (i.value()->getStatus()==ST_ADMIN)
             i.value()->sendList(clientList);

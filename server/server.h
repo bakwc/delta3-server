@@ -7,6 +7,7 @@
 #include <QTimerEvent>
 #include "client.h"
 #include "defines.h"
+#include "utils.hpp"
 
 typedef QMap<qint32,Client*> Clients;
 
@@ -17,7 +18,7 @@ public:
     Server(QObject* parent = 0);
     ~Server();
     bool start();
-    QString listConnectedClients();
+    QByteArray listConnectedClients();
     Clients::iterator searchClient(qint32 clientId);
     Clients::iterator clientEnd();
     void resendListToAdmins();
