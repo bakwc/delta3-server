@@ -18,6 +18,6 @@ T fromBytes(const QByteArray& array)
         qDebug() << "fromBytes(): error";
         return 0;
     }
-    T res=*(reinterpret_cast<T*>(array.data()));
-    return res;
+    const T* tmp=(reinterpret_cast<const T*>(array.data()));
+    return *tmp;
 }
