@@ -161,8 +161,12 @@ void Client::parseDisconnect()
 
 void Client::parsePing()
 {
+    qDebug() << "Ping received!";
     if (buf_.size()<3) // TODO: remove magic number
         return;     // not all data avaliable
+
+    qDebug() << "Ping parsed!";
+    setSeen();
 
     buf_=buf_.right(buf_.size()-3);
     if (buf_.size()>0)
