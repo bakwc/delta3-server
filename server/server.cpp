@@ -1,81 +1,97 @@
 #include "server.h"
 
-Server::Server(QObject *parent):
-    QObject(parent),
-    tcpServer_(new QTcpServer(this))
+#include "client.h"
+#include "utils.h"
+
+namespace
 {
-    connect(tcpServer_,SIGNAL(newConnection()),
-            this,SLOT(onNewConnection()));
+    const quint16 DEFAULT_PORT = 0;
+
+    const quint16 MAX_UNACTIVE_TIME = 15;
+    const quint16 TIME_TO_PING = 5;
 }
 
-Server::~Server()
+namespace delta3
 {
-}
+    Server::Server(QObject *parent):
+        QObject(parent),
+        tcpServer_(new QTcpServer(this))
+    {
+        connect(tcpServer_,SIGNAL(newConnection()),
+                this,SLOT(onNewConnection()));
+    }
 
-bool Server::start()
-{
-    startTimer( DEFAULT_TIMER_INTERVAL );
-    return tcpServer_->listen(QHostAddress("0.0.0.0"),1235);
-}
+    Server::~Server()
+    {
+    }
 
-void Server::onNewConnection()
-{
-    qDebug() << "Server::onNewConnection(): new anonymous user connected";
-    Client *client=new Client(
+    bool Server::start()
+    {
+        startTimer( DEFAULT_TIMER_INTERVAL );
+        return tcpServer_->listen(QHostAddress(),1235);
+    }
+
+    void Server::onNewConnection()
+    {
+        qDebug() << "Server::onNewConnection(): new anonymous user connected";
+        Client *client=new Client(
                 tcpServer_->nextPendingConnection(),
                 this);
-    clients_.insert(client->getId(),client);
-}
+        clients_.insert(client->getId(),client);
+    }
 
-QByteArray Server::listConnectedClients()
-{
-    QByteArray result;
-    for (auto i=clients_.begin();i!=clients_.end();i++)
-        if (i.value()->getStatus()==ST_CLIENT)
-        {
-            result.append( toBytes(i.key()) );
-            result.append( i.value()->getIdHash() );
-        }
-    return result;
-}
-
-Clients::iterator Server::searchClient(qint32 clientId)
-{
-    return clients_.find(clientId);
-}
-
-Clients::iterator Server::clientEnd()
-{
-    return clients_.end();
-}
-
-void Server::timerEvent( QTimerEvent* event )
-{
-    Q_UNUSED( event );
-
-    for (auto i=clients_.begin();i!=clients_.end();i++)
+    QByteArray Server::listConnectedClients()
     {
-        if (i.value()->getStatus()==ST_DISCONNECTED)
-            continue;
-
-        if (i.value()->getLastSeen()>15)
+        QByteArray result;
+        for (auto i=clients_.begin();i!=clients_.end();i++)
         {
-            i.value()->disconnectFromHost();
-            continue;
+            if (i.value()->getStatus()==ST_CLIENT)
+            {
+                result.append( toBytes(i.key()) );
+                result.append( i.value()->getIdHash() );
+            }
         }
+        return result;
+    }
 
-        if (i.value()->getLastSeen()>5)
+    Clients::iterator Server::searchClient(qint32 clientId)
+    {
+        return clients_.find(clientId);
+    }
+
+    Clients::iterator Server::clientEnd()
+    {
+        return clients_.end();
+    }
+
+    void Server::timerEvent( QTimerEvent* event )
+    {
+        Q_UNUSED( event );
+
+        for (auto i=clients_.begin();i!=clients_.end();i++)
         {
-            i.value()->sendPing();
+            if (i.value()->getStatus()==ST_DISCONNECTED)
+                continue;
+
+            if (i.value()->getLastSeen()>MAX_UNACTIVE_TIME)
+            {
+                i.value()->disconnectFromHost();
+                continue;
+            }
+
+            if (i.value()->getLastSeen()>TIME_TO_PING)
+            {
+                i.value()->ping();
+            }
         }
     }
-}
 
-void Server::resendListToAdmins()
-{
-    qDebug() << "Sending list!";
-    QByteArray clientList=listConnectedClients();
-    for (auto i=clients_.begin();i!=clients_.end();i++)
-        if (i.value()->getStatus()==ST_ADMIN)
-            i.value()->sendList(clientList);
+    void Server::resendListToAdmins()
+    {
+        qDebug() << "Sending list!";
+        QByteArray clientList=listConnectedClients();
+        for (auto i=clients_.begin();i!=clients_.end();i++)
+            if (i.value()->getStatus()==ST_ADMIN)
+                i.value()->sendList(clientList);
+    }
 }

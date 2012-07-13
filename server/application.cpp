@@ -1,24 +1,24 @@
 #include "application.h"
 
-Application::Application( int& argc, char* argv[] ):
-    QCoreApplication( argc, argv ),
-    server_(new Server(this))
-{
-    //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-}
+#include "server.h"
 
-Application::~Application()
+namespace delta3
 {
-}
+    Application::Application( int& argc, char* argv[] ):
+        QCoreApplication( argc, argv ),
+        server_(new Server(this))
+    {
+        //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+        QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    }
 
-bool Application::init()
-{
-    if (!startServer()) return false;
-    return true;
-}
+    Application::~Application()
+    {
+    }
 
-bool Application::startServer()
-{
-    return server_->start();
+    bool Application::start()
+    {
+        return server_->start();
+    }
+
 }

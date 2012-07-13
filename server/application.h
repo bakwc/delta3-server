@@ -1,16 +1,22 @@
 #pragma once
+
 #include <QCoreApplication>
 #include <QTextCodec>
-#include "server.h"
 
-class Application: public QCoreApplication
+namespace delta3
 {
-    Q_OBJECT
-public:
-    Application( int& argc, char* argv[] );
-    ~Application ();
-    bool init();
-    bool startServer();
-private:
-    Server *server_;
-};
+    class Server;
+
+    class Application: public QCoreApplication
+    {
+        Q_OBJECT
+    public:
+        Application( int& argc, char* argv[] );
+        ~Application ();
+
+        bool start();
+
+    private:
+        Server *server_;
+    };
+}
