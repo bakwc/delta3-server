@@ -11,7 +11,7 @@ QByteArray toBytes(T num)
 }
 
 template <typename T>
-T fromBytes(QByteArray array)
+T fromBytes(const QByteArray& array)
 {
     if (array.size()!=sizeof(T))
     {
