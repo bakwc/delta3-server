@@ -48,8 +48,12 @@ namespace delta3
         {
             if (i.value()->getStatus()==ST_CLIENT)
             {
-                result.append( toBytes(i.key()) );
-                result.append( i.value()->getIdHash() );
+                QByteArray clientInfo;
+                clientInfo.append( toBytes(i.key()) );
+                clientInfo.append( i.value()->getIdHash() );
+                clientInfo=clientInfo.leftJustified(92,0);
+                //TODO: correct information implementation
+                result.append(clientInfo);
                 clientNum++;
             }
         }

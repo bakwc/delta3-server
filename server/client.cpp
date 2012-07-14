@@ -16,6 +16,7 @@ namespace delta3
         { CMD1_TRANSMIT, &Client::parseTransmit },
         { CMD1_PING, &Client::parsePing },
         { CMD1_DISCONNECT, &Client::parseDisconnect },
+        { CMD1_SETINFO, &Client::parseSetInfo },
     };
 
     Client::Client(QTcpSocket *socket, QObject *parent):
@@ -99,20 +100,23 @@ namespace delta3
             return;
         }
 
-        if (buf_.size()<19) // TODO: remove magic number
+        if (buf_.size() < CMD1_AUTH_SIZE)
             return;     // not all data avaliable
 
         this->status_ = ST_CLIENT;
 
         ClientInfo* clientInfo=new ClientInfo;
         clientInfo->hash = getClientHash(buf_);
+        //clientInfo->OS = getClientOs(buf_);
+        //clientInfo->DeviceType = getClientDevice(buf_);
+        // TODO: implement functions above
         this->clientInfo_.reset(clientInfo);
 
         qDebug() << "new client authorized";
 
         this->getServer()->resendListToAdmins();
 
-        buf_=buf_.right(buf_.size()-19);
+        buf_=buf_.right(buf_.size()-CMD1_AUTH_SIZE);
         if (buf_.size()>0)
             onDataReceived();   // If something in buffer - parse again
     }
@@ -127,7 +131,7 @@ namespace delta3
             return;
         }
 
-        if (buf_.size()<47) // TODO: remove magic number
+        if (buf_.size()<CMD1_ADM_SIZE)
             return;     // not all data avaliable
 
         if (getAdminLogin(buf_)!="admin" ||
@@ -147,7 +151,7 @@ namespace delta3
 
         qDebug() << "New admin authorized:";
 
-        buf_=buf_.right(buf_.size()-47);
+        buf_=buf_.right(buf_.size()-CMD1_ADM_SIZE);
         if (buf_.size()>0)
             onDataReceived();   // If something in buffer - parse again
     }
@@ -177,6 +181,20 @@ namespace delta3
         if (buf_.size()>0)
             onDataReceived();   // If something in buffer - parse again
     }
+
+    void Client::parseSetInfo()
+    {
+        qDebug() << "SetInfor received!";
+        if (buf_.size()< CMD1_SETINFO_SIZE) // TODO: remove magic number
+            return;     // not all data avaliable
+
+        // TODO: implement set info
+
+        buf_=buf_.right(buf_.size() - CMD1_SETINFO_SIZE);
+        if (buf_.size()>0)
+            onDataReceived();   // If something in buffer - parse again
+    }
+
 
     void Client::parseList()
     {

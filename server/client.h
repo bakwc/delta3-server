@@ -58,6 +58,7 @@ namespace delta3
         void parseTransmit();
         void parseDisconnect();
         void parsePing();
+        void parseSetInfo();
 
     private:
         struct BasicInfo
@@ -68,6 +69,8 @@ namespace delta3
         struct ClientInfo : BasicInfo
         {
             QByteArray hash;
+            QString OS;
+            QString DeviceType;
         };
 
         struct AdminInfo : BasicInfo
