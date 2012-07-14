@@ -19,7 +19,7 @@ namespace delta3
         if (array.size()!=sizeof(T))
         {
             qDebug() << "fromBytes(): error";
-            return 0;
+            return (T) 0;
         }
         const T* tmp=(reinterpret_cast<const T*>(array.data()));
         return *tmp;

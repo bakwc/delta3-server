@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <QtNetwork/QTcpSocket>
 #include <QString>
 #include <QByteArray>
@@ -59,13 +61,32 @@ namespace delta3
         void parsePing();
 
     private:
-        Server *getServer();
+        struct BasicInfo
+        {
+            virtual ~BasicInfo() {}
+        };
+
+        struct ClientInfo : BasicInfo
+        {
+            QByteArray hash;
+        };
+
+        struct AdminInfo : BasicInfo
+        {
+            QString login;
+            QString pass;
+        };
+
+    private:
+        Server *getServer() const;
+        ClientInfo *getClientInfo() const;
+        AdminInfo *getAdminInfo() const;
 
     private:
         quint32 lastSeen_;   //timestamp
         ClientStatus status_;
         QTcpSocket* socket_;
-        void* clientInfo_;  // pointer to info
+        std::unique_ptr<BasicInfo> clientInfo_;
         QByteArray buf_;
     };
 }

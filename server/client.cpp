@@ -8,17 +8,6 @@ namespace
 {
     using namespace delta3;
 
-    struct ClientInfo
-    {
-        QByteArray hash;
-    };
-
-    struct AdminInfo
-    {
-        QString login;
-        QString pass;
-    };
-
     qint8 getProtoId(const QByteArray& buffer)
     {
         return (qint8)(buffer[0]);
@@ -117,7 +106,7 @@ namespace delta3
         }
 
 
-        Cspyp1Command command = getCommand(buf_);
+        const Cspyp1Command command = getCommand(buf_);
         for (int i = 0; i < sizeof(CommandTable) / sizeof(*CommandTable); ++i)
         {
             if (CommandTable[i].command == command)
@@ -138,8 +127,7 @@ namespace delta3
 
     QByteArray Client::getIdHash() const
     {
-        ClientInfo* info=reinterpret_cast<ClientInfo*>(clientInfo_);
-        return info->hash;
+        return getClientInfo()->hash;
     }
 
     ClientStatus Client::getStatus() const
@@ -164,7 +152,7 @@ namespace delta3
 
         ClientInfo* clientInfo=new ClientInfo;
         clientInfo->hash = getClientHash(buf_);
-        this->clientInfo_ = reinterpret_cast<void*>(clientInfo);
+        this->clientInfo_.reset(clientInfo);
 
         qDebug() << "new client authorized";
 
@@ -201,7 +189,7 @@ namespace delta3
         AdminInfo* adminInfo=new AdminInfo;
         adminInfo->login = getAdminLogin(buf_);
         adminInfo->pass = getAdminPassword(buf_);
-        this->clientInfo_ = reinterpret_cast<void*>(adminInfo);
+        this->clientInfo_.reset(adminInfo);
 
         qDebug() << "New admin authorized:";
 
@@ -301,9 +289,19 @@ namespace delta3
             onDataReceived();   // If something in buffer - parse again
     }
 
-    Server* Client::getServer()
+    Server* Client::getServer() const
     {
         return static_cast<Server*>(parent());
+    }
+
+    Client::ClientInfo* Client::getClientInfo() const
+    {
+        return static_cast<ClientInfo*>(clientInfo_.get());
+    }
+
+    Client::AdminInfo* Client::getAdminInfo() const
+    {
+        return static_cast<AdminInfo*>(clientInfo_.get());
     }
 
     quint32 Client::getLastSeen() const
@@ -321,18 +319,7 @@ namespace delta3
         qDebug() << "disconnectFromHost()";
         socket_->disconnectFromHost();
 
-        if (this->status_==ST_ADMIN)
-        {
-            AdminInfo *adminInfo = reinterpret_cast<AdminInfo*>(this->clientInfo_);
-            if (adminInfo!=NULL)
-                delete adminInfo;
-        }
-        else if (this->status_==ST_CLIENT)
-        {
-            ClientInfo *clientInfo = reinterpret_cast<ClientInfo*>(this->clientInfo_);
-            if (clientInfo!=NULL)
-                delete clientInfo;
-        }
+        clientInfo_.reset();
 
         status_=ST_DISCONNECTED;
         getServer()->resendListToAdmins();
