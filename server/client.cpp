@@ -100,6 +100,8 @@ namespace delta3
             return;
         }
 
+        qDebug() << buf_.size();
+
         if (buf_.size() < CMD1_AUTH_SIZE)
             return;     // not all data avaliable
 
@@ -230,6 +232,9 @@ namespace delta3
         if (buf_.size()<9) // TODO: remove magic number
             return;     // not all data avaliable
 
+        qDebug() << "buf size" << buf_.size();
+        qDebug() << "packet len" << getPacketLength(buf_);
+
         if (buf_.size()<getPacketLength(buf_)+9) // TODO: remove magic number
             return; // not all data avaliable
 
@@ -246,8 +251,8 @@ namespace delta3
         response.append(toBytes(cmd.size()));
         response.append(cmd);
 
-
         auto destClient=getServer()->searchClient(clientId);
+        qDebug() << "Client to ID:" << clientId;
 
         if (destClient!=getServer()->clientEnd())
         {
