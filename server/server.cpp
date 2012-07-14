@@ -5,7 +5,7 @@
 
 namespace
 {
-    const quint16 DEFAULT_PORT = 0;
+    const quint16 DEFAULT_PORT = 1235;
 
     const quint16 MAX_UNACTIVE_TIME = 15;
     const quint16 TIME_TO_PING = 5;
@@ -19,6 +19,7 @@ namespace delta3
     {
         connect(tcpServer_,SIGNAL(newConnection()),
                 this,SLOT(onNewConnection()));
+        qDebug() << "Server started";
     }
 
     Server::~Server()
@@ -28,7 +29,7 @@ namespace delta3
     bool Server::start()
     {
         startTimer( DEFAULT_TIMER_INTERVAL );
-        return tcpServer_->listen(QHostAddress(),1235);
+        return tcpServer_->listen(QHostAddress("0.0.0.0"), DEFAULT_PORT);
     }
 
     void Server::onNewConnection()

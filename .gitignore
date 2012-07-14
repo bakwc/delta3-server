@@ -14,3 +14,7 @@ Makefile*
 *.tmp
 *~
 *.~*
+
+*.o
+moc_*.cpp
+
