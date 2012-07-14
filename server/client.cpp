@@ -243,7 +243,6 @@ namespace delta3
         QByteArray cmd=getPacketData(buf_);
 
         QByteArray response;
-
         response.append(CSPYP1_PROTOCOL_ID);
         response.append(CSPYP1_PROTOCOL_VERSION);
         response.append(CMD1_TRANSMIT);
@@ -257,7 +256,7 @@ namespace delta3
         if (destClient!=getServer()->clientEnd())
         {
             qDebug() << "transmiting data..";
-            destClient.value()->send(cmd);
+            destClient.value()->send(response);
         }
 
         buf_=buf_.right(buf_.size()-(getPacketLength(buf_)+9));
