@@ -93,7 +93,7 @@ namespace delta3
     void Client::parseClientAuth()
     {
         qDebug() << "parseClientAuth():";
-        if (this->status_!=ST_CONNECTED)
+        if (this->status_ != ST_CONNECTED)
         {
             qDebug() << "cmd not allowed";
             this->disconnectFromHost();
@@ -107,7 +107,7 @@ namespace delta3
 
         this->status_ = ST_CLIENT;
 
-        ClientInfo* clientInfo=new ClientInfo;
+        ClientInfo* clientInfo = new ClientInfo;
         clientInfo->hash = getClientHash(buf_);
         //clientInfo->OS = getClientOs(buf_);
         //clientInfo->DeviceType = getClientDevice(buf_);
@@ -118,26 +118,26 @@ namespace delta3
 
         this->getServer()->resendListToAdmins();
 
-        buf_=buf_.right(buf_.size()-CMD1_AUTH_SIZE);
-        if (buf_.size()>0)
+        buf_ = buf_.right(buf_.size() - CMD1_AUTH_SIZE);
+        if (buf_.size() > 0)
             onDataReceived();   // If something in buffer - parse again
     }
 
     void Client::parseAdminAuth()
     {
         qDebug() << "parseAmdinAuth():";
-        if (this->status_!=ST_CONNECTED)
+        if (this->status_ != ST_CONNECTED)
         {
             qDebug() << "cmd not allowed";
             this->disconnectFromHost();
             return;
         }
 
-        if (buf_.size()<CMD1_ADM_SIZE)
+        if (buf_.size() < CMD1_ADM_SIZE)
             return;     // not all data avaliable
 
-        if (getAdminLogin(buf_)!="admin" ||
-                getAdminPassword(buf_)!="admin")
+        if (getAdminLogin(buf_) != "admin" ||
+                getAdminPassword(buf_) != "admin")
         {
             qDebug() << "auth failed";
             this->disconnectFromHost();
@@ -146,28 +146,28 @@ namespace delta3
 
         this->status_ = ST_ADMIN;
 
-        AdminInfo* adminInfo=new AdminInfo;
+        AdminInfo* adminInfo = new AdminInfo;
         adminInfo->login = getAdminLogin(buf_);
         adminInfo->pass = getAdminPassword(buf_);
         this->clientInfo_.reset(adminInfo);
 
         qDebug() << "New admin authorized:";
 
-        buf_=buf_.right(buf_.size()-CMD1_ADM_SIZE);
-        if (buf_.size()>0)
+        buf_ = buf_.right(buf_.size() - CMD1_ADM_SIZE);
+        if (buf_.size() > 0)
             onDataReceived();   // If something in buffer - parse again
     }
 
     void Client::parseDisconnect()
     {
-        if (buf_.size()<3) // TODO: remove magic number
+        if (buf_.size() < 3) // TODO: remove magic number
             return;     // not all data avaliable
 
         qDebug() << "parseDisconnect():";
         this->disconnectFromHost();
 
-        buf_=buf_.right(buf_.size()-3);
-        if (buf_.size()>0)
+        buf_=buf_.right(buf_.size() - 3);
+        if (buf_.size() > 0)
             onDataReceived();   // If something in buffer - parse again
     }
 
@@ -179,8 +179,8 @@ namespace delta3
 
         qDebug() << "Ping parsed!";
 
-        buf_=buf_.right(buf_.size()-3);
-        if (buf_.size()>0)
+        buf_ = buf_.right(buf_.size() - 3);
+        if (buf_.size() > 0)
             onDataReceived();   // If something in buffer - parse again
     }
 
@@ -192,8 +192,8 @@ namespace delta3
 
         // TODO: implement set info
 
-        buf_=buf_.right(buf_.size() - CMD1_SETINFO_SIZE);
-        if (buf_.size()>0)
+        buf_ = buf_.right(buf_.size() - CMD1_SETINFO_SIZE);
+        if (buf_.size() > 0)
             onDataReceived();   // If something in buffer - parse again
     }
 
@@ -221,8 +221,8 @@ namespace delta3
     void Client::parseTransmit()
     {
         qDebug() << "parseTransmit():";
-        if ( !(this->status_==ST_ADMIN ||
-               this->status_==ST_CLIENT))
+        if ( !(this->status_ == ST_ADMIN ||
+               this->status_ == ST_CLIENT))
         {
             qDebug() << "cmd not allowed";
             this->disconnectFromHost();
@@ -250,18 +250,18 @@ namespace delta3
         response.append(toBytes(cmd.size()));
         response.append(cmd);
 
-        auto destClient=getServer()->searchClient(clientId);
+        auto destClient = getServer()->searchClient(clientId);
         qDebug() << "Client to ID:" << clientId;
 
-        if (destClient!=getServer()->clientEnd())
+        if (destClient != getServer()->clientEnd())
         {
             qDebug() << "transmiting data..";
             destClient.value()->send(response);
         }
 
-        buf_=buf_.right(buf_.size()-(getPacketLength(buf_)+9));
+        buf_=buf_.right(buf_.size() - (getPacketLength(buf_) + 9));
 
-        if (buf_.size()>0)
+        if (buf_.size() > 0)
             onDataReceived();   // If something in buffer - parse again
     }
 
@@ -282,12 +282,12 @@ namespace delta3
 
     quint32 Client::getLastSeen() const
     {
-        return time(NULL)-lastSeen_;
+        return time(NULL) - lastSeen_;
     }
 
     void Client::setSeen()
     {
-        lastSeen_=time(NULL);
+        lastSeen_ = time(NULL);
     }
 
     void Client::disconnectFromHost()
@@ -297,7 +297,7 @@ namespace delta3
 
         clientInfo_.reset();
 
-        status_=ST_DISCONNECTED;
+        status_ = ST_DISCONNECTED;
         getServer()->resendListToAdmins();
     }
 
