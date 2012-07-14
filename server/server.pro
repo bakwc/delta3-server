@@ -18,11 +18,13 @@ QMAKE_CXXFLAGS += -std=c++0x
 SOURCES += main.cpp \
     server.cpp \
     application.cpp \
-    client.cpp
+    client.cpp \
+    netextract.cpp
 
 HEADERS += \
     server.h \
     application.h \
     client.h \
     defines.h \
-    utils.h
+    utils.h \
+    netextract.h

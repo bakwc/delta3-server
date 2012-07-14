@@ -2,6 +2,7 @@
 
 #include <QtGlobal>
 #include <QByteArray>
+#include <QDebug>
 
 namespace delta3
 {

@@ -9,7 +9,6 @@
 #include <QDebug>
 #include <QRegExp>
 #include <ctime>
-
 #include "defines.h"
 
 namespace delta3
