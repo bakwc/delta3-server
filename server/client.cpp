@@ -107,7 +107,7 @@ namespace delta3
 
 
         const Cspyp1Command command = getCommand(buf_);
-        for (int i = 0; i < sizeof(CommandTable) / sizeof(*CommandTable); ++i)
+        for (quint32 i = 0; i < sizeof(CommandTable) / sizeof(*CommandTable); ++i)
         {
             if (CommandTable[i].command == command)
             {

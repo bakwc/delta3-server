@@ -25,4 +25,4 @@ HEADERS += \
     application.h \
     client.h \
     defines.h \
-    utils.hpp
+    utils.h

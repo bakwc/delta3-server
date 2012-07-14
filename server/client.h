@@ -84,9 +84,9 @@ namespace delta3
 
     private:
         quint32 lastSeen_;   //timestamp
-        ClientStatus status_;
         QTcpSocket* socket_;
         std::unique_ptr<BasicInfo> clientInfo_;
+        ClientStatus status_;
         QByteArray buf_;
     };
 }
