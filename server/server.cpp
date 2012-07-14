@@ -43,14 +43,17 @@ namespace delta3
     QByteArray Server::listConnectedClients()
     {
         QByteArray result;
+        qint16 clientNum=0;
         for (auto i=clients_.begin();i!=clients_.end();i++)
         {
             if (i.value()->getStatus()==ST_CLIENT)
             {
                 result.append( toBytes(i.key()) );
                 result.append( i.value()->getIdHash() );
+                clientNum++;
             }
         }
+        result=toBytes(clientNum)+result;
         return result;
     }
 
@@ -75,6 +78,7 @@ namespace delta3
 
             if (i.value()->getLastSeen()>MAX_UNACTIVE_TIME)
             {
+                qDebug() << "Client inactive!";
                 i.value()->disconnectFromHost();
                 continue;
             }

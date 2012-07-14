@@ -93,6 +93,7 @@ namespace delta3
     {
         qDebug() << "onDataReceived():";
         buf_+=socket_->readAll();
+        setSeen();
 
         if (buf_.size()<3) return; // if we don't read header
 
@@ -203,6 +204,7 @@ namespace delta3
         if (buf_.size()<3) // TODO: remove magic number
             return;     // not all data avaliable
 
+        qDebug() << "parseDisconnect():";
         this->disconnectFromHost();
 
         buf_=buf_.right(buf_.size()-3);
@@ -217,7 +219,6 @@ namespace delta3
             return;     // not all data avaliable
 
         qDebug() << "Ping parsed!";
-        setSeen();
 
         buf_=buf_.right(buf_.size()-3);
         if (buf_.size()>0)
@@ -330,7 +331,7 @@ namespace delta3
         QByteArray cmd;
         cmd.append(CSPYP1_PROTOCOL_ID);
         cmd.append(CSPYP1_PROTOCOL_VERSION);
-        cmd.append(CMD1_LIST);
+        cmd.append(CMD1_RLIST);
         cmd.append(list);
         this->send(cmd);
     }
