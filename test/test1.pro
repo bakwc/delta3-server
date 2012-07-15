@@ -10,11 +10,11 @@ QT       += testlib
 QT       -= gui
 
 TARGET = alltests
+CONFIG   += qtestlib
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-QMAKE_CXXFLAGS += -std=c++0x
 
 SOURCES += \
     tests.cpp \

@@ -2,6 +2,7 @@
 #define ALLTESTS_H
 
 #include <QObject>
+#include <QByteArray>
 #include <QtTest>
 
 class AllTests : public QObject
