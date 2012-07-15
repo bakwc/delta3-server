@@ -22,6 +22,16 @@ namespace delta3
         return buffer.mid(3,16);
     }
 
+    QString getClientOs(const QByteArray& buffer)
+    {
+        return buffer.mid(19,20);
+    }
+
+    QString getClientDevice(const QByteArray& buffer)
+    {
+        return buffer.mid(39,20);
+    }
+
     QString getAdminLogin(const QByteArray& buffer)
     {
         return buffer.mid(3,22);

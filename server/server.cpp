@@ -50,10 +50,11 @@ namespace delta3
             if (i.value()->getStatus()==ST_CLIENT)
             {
                 QByteArray clientInfo;
-                clientInfo.append( toBytes(i.key()) );
+                clientInfo.append( toBytes((qint16)i.key()) );
                 clientInfo.append( i.value()->getIdHash() );
-                clientInfo=clientInfo.leftJustified(92,0);
-                //TODO: correct information implementation
+                clientInfo.append( toBytes(i.value()->getOs(), 20 ), 20 );
+                clientInfo.append( toBytes(i.value()->getDevice(), 24 ), 24 );
+                clientInfo.append( toBytes(i.value()->getCaption(), 30 ), 30 );
                 result.append(clientInfo);
                 clientNum++;
             }

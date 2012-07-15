@@ -36,4 +36,12 @@ namespace delta3
         CMD2_DEACTIVATE,
         CMD2_TRANSMIT
     };
+
+    enum ClientStatus
+    {
+        ST_DISCONNECTED,
+        ST_CONNECTED,
+        ST_CLIENT,
+        ST_ADMIN
+    };
 }

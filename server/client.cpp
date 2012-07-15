@@ -85,6 +85,21 @@ namespace delta3
         return getClientInfo()->hash;
     }
 
+    QString Client::getOs() const
+    {
+        return getClientInfo()->os;
+    }
+
+    QString Client::getDevice() const
+    {
+        return getClientInfo()->deviceType;
+    }
+
+    QString Client::getCaption() const
+    {
+        return getClientInfo()->caption;
+    }
+
     ClientStatus Client::getStatus() const
     {
         return status_;
@@ -109,8 +124,8 @@ namespace delta3
 
         ClientInfo* clientInfo = new ClientInfo;
         clientInfo->hash = getClientHash(buf_);
-        //clientInfo->OS = getClientOs(buf_);
-        //clientInfo->DeviceType = getClientDevice(buf_);
+        clientInfo->os = getClientOs(buf_);
+        clientInfo->deviceType = getClientDevice(buf_);
         // TODO: implement functions above
         this->clientInfo_.reset(clientInfo);
 

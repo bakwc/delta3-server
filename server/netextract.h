@@ -11,6 +11,8 @@ namespace delta3
     qint8 getProtoVersion(const QByteArray& buffer);
     Cspyp1Command getCommand(const QByteArray& buffer);
     QByteArray getClientHash(const QByteArray& buffer);
+    QString getClientOs(const QByteArray& buffer);
+    QString getClientDevice(const QByteArray& buffer);
     QString getAdminLogin(const QByteArray& buffer);
     QString getAdminPassword(const QByteArray& buffer);
     qint32 getPacketLength(const QByteArray& buffer);

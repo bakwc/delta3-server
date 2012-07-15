@@ -13,14 +13,6 @@
 
 namespace delta3
 {
-    enum ClientStatus
-    {
-        ST_DISCONNECTED,
-        ST_CONNECTED,
-        ST_CLIENT,
-        ST_ADMIN
-    };
-
     class Server;
 
     class Client: public QObject
@@ -33,6 +25,9 @@ namespace delta3
         void ping() const;
         qint16 getId() const;
         QByteArray getIdHash() const;
+        QString getOs() const;
+        QString getDevice() const;
+        QString getCaption() const;
         ClientStatus getStatus() const;
         quint32 getLastSeen() const;
         void setSeen();
@@ -69,8 +64,9 @@ namespace delta3
         struct ClientInfo : BasicInfo
         {
             QByteArray hash;
-            QString OS;
-            QString DeviceType;
+            QString os;
+            QString deviceType;
+            QString caption;
         };
 
         struct AdminInfo : BasicInfo
