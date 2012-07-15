@@ -1,7 +1,8 @@
 #-------------------------------------------------
-#
-# Project created by QtCreator 2012-07-15T11:41:55
-#
+# This unit test project for server. executable
+# Will be generated in the directory `test'
+# Maybe we should auto execute tests after building
+# `server' project.
 #-------------------------------------------------
 
 QT       += testlib
