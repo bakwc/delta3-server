@@ -28,3 +28,8 @@ HEADERS += \
     defines.h \
     utils.h \
     netextract.h
+
+# enabling tests
+#CONFIG += testcase
+#include (test1.pri)
+
