@@ -20,3 +20,4 @@ moc_*.cpp
 *.moc
 server/server
 test/alltests
+test/debug*/

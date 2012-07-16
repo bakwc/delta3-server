@@ -201,11 +201,22 @@ namespace delta3
 
     void Client::parseSetInfo()
     {
-        qDebug() << "SetInfor received!";
+        qDebug() << "SetInfo received!";
+
+        if (this->status_!=ST_ADMIN)
+        {
+            qDebug() << "cmd not allowed";
+            this->disconnectFromHost();
+            return;
+        }
+
         if (buf_.size()< CMD1_SETINFO_SIZE) // TODO: remove magic number
             return;     // not all data avaliable
 
-        // TODO: implement set info
+        qint16 clientId=getClientId(buf_);
+        QString caption=getClientCaption(buf_);
+
+        getServer()->setClientCaption(clientId,caption);
 
         buf_ = buf_.right(buf_.size() - CMD1_SETINFO_SIZE);
         if (buf_.size() > 0)
@@ -300,9 +311,21 @@ namespace delta3
         return time(NULL) - lastSeen_;
     }
 
+    qint32 Client::getIp() const
+    {
+        return socket_->peerAddress().toIPv4Address();
+    }
+
     void Client::setSeen()
     {
         lastSeen_ = time(NULL);
+    }
+
+    void Client::setCaption(const QString& caption)
+    {
+        if (status_!=ST_CLIENT)
+            return;
+        this->getClientInfo()->caption=caption;
     }
 
     void Client::disconnectFromHost()

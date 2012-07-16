@@ -52,6 +52,11 @@ namespace delta3
         return fromBytes<qint16>(buffer.mid(3,2));
     }
 
+    QString getClientCaption(const QByteArray& buffer)
+    {
+        return buffer.mid(5,30);
+    }
+
     QByteArray getPacketData(const QByteArray& buffer)
     {
         return buffer.mid(9,getPacketLength(buffer));

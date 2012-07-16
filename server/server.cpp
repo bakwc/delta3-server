@@ -53,7 +53,8 @@ namespace delta3
                 clientInfo.append( toBytes((qint16)i.key()) );
                 clientInfo.append( i.value()->getIdHash() );
                 clientInfo.append( toBytes(i.value()->getOs(), 20 ), 20 );
-                clientInfo.append( toBytes(i.value()->getDevice(), 24 ), 24 );
+                clientInfo.append( toBytes(i.value()->getDevice(), 20 ), 20 );
+                clientInfo.append( toBytes(i.value()->getIp()), 4);
                 clientInfo.append( toBytes(i.value()->getCaption(), 30 ), 30 );
                 result.append(clientInfo);
                 clientNum++;
@@ -103,5 +104,13 @@ namespace delta3
         for (auto i=clients_.begin();i!=clients_.end();i++)
             if (i.value()->getStatus()==ST_ADMIN)
                 i.value()->sendList(clientList);
+    }
+
+    void Server::setClientCaption(qint16 clientId, const QString& caption)
+    {
+        auto i=clients_.find(clientId);
+        if (i==clients_.end())
+            return;
+        i.value()->setCaption(caption);
     }
 }

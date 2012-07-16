@@ -30,7 +30,9 @@ namespace delta3
         QString getCaption() const;
         ClientStatus getStatus() const;
         quint32 getLastSeen() const;
+        qint32 getIp() const;
         void setSeen();
+        void setCaption(const QString& caption);
         void disconnectFromHost();
         void sendList(const QByteArray &list);
 

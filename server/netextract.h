@@ -18,4 +18,5 @@ namespace delta3
     qint32 getPacketLength(const QByteArray& buffer);
     qint16 getClientId(const QByteArray& buffer);
     QByteArray getPacketData(const QByteArray& buffer);
+    QString getClientCaption(const QByteArray& buffer);
 }
