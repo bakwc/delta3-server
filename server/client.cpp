@@ -4,7 +4,7 @@
 #include "defines.h"
 #include "server.h"
 #include "utils.h"
-
+#include "clientinfostorage.h"
 
 
 namespace delta3
@@ -19,9 +19,10 @@ namespace delta3
         { CMD1_SETINFO, &Client::parseSetInfo },
     };
 
-    Client::Client(QTcpSocket *socket, QObject *parent):
+    Client::Client(QTcpSocket *socket, ClientInfoStorage *storage, QObject *parent):
         QObject(parent),
         socket_(socket),
+        storage_(storage),
         clientInfo_(),
         status_(ST_CONNECTED)
     {
@@ -126,8 +127,18 @@ namespace delta3
         clientInfo->hash = getClientHash(buf_);
         clientInfo->os = getClientOs(buf_);
         clientInfo->deviceType = getClientDevice(buf_);
-        // TODO: implement functions above
-        this->clientInfo_.reset(clientInfo);
+
+        ClientInfoStorage::ClientInfo storeInfo;
+        storeInfo.hash=clientInfo->hash;
+        storeInfo.ip=QHostAddress(getIp());         // TODO: some refactor here!!
+        storeInfo.os=clientInfo->os;                // storeInfo for saving client;
+        storeInfo.device=clientInfo->deviceType;    // clientInfo - for client? mb not needed?
+
+        storage_->updateClient(storeInfo);  // to storage
+
+        clientInfo->caption=storage_->getCaption(clientInfo->hash);
+
+        this->clientInfo_.reset(clientInfo); // to self
 
         qDebug() << "new client authorized";
 

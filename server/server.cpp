@@ -15,7 +15,8 @@ namespace delta3
 {
     Server::Server(QObject *parent):
         QObject(parent),
-        tcpServer_(new QTcpServer(this))
+        tcpServer_(new QTcpServer(this)),
+        storage_(new ClientInfoStorage(this))
     {
         connect(tcpServer_,SIGNAL(newConnection()),
                 this,SLOT(onNewConnection()));
@@ -37,7 +38,7 @@ namespace delta3
         qDebug() << "Server::onNewConnection(): new anonymous user connected";
         Client *client=new Client(
                 tcpServer_->nextPendingConnection(),
-                this);
+                storage_, this);
         clients_.insert(client->getId(),client);
     }
 
@@ -112,5 +113,7 @@ namespace delta3
         if (i==clients_.end())
             return;
         i.value()->setCaption(caption);
+        storage_->setCaption(i.value()->getIdHash(),caption);
+        i.value()->getIdHash();
     }
 }

@@ -21,3 +21,6 @@ moc_*.cpp
 server/server
 test/alltests
 test/debug*/
+
+*.Debug
+*.Release

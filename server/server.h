@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QTimerEvent>
 
+#include "clientinfostorage.h"
 #include "defines.h"
 
 namespace delta3
@@ -38,5 +39,6 @@ namespace delta3
     private:
         QTcpServer* tcpServer_;
         Clients clients_;
+        ClientInfoStorage *storage_;
     };
 }
