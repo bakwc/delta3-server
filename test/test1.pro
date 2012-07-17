@@ -18,6 +18,7 @@ TEMPLATE = app
 
 SOURCES += \
     tests.cpp \
+    ../server/netextract.cpp \
     alltests.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 HEADERS += ../server/utils.h \
