@@ -23,14 +23,37 @@ namespace delta3
     public:
         Client(QTcpSocket *socket, ClientInfoStorage *storage, QObject *parent=0);
 
+        // Посылает массив данных на сокет.
         void send(const QByteArray &cmd) const;
+
+        // Генерирует и посылает ping пакет на клиент
+        // Если ответ не приходит (проверка в другом месте),
+        // клиент считается отключенным.
         void ping() const;
+
+        // У нас айди клиента и админа это
+        // декриптор соответствующего ему сокета.
+        // Айди нужны для адресации пакетов.
+        // Эта функция возвращает декриптор сокета.
         qint16 getId() const;
+
+        // Для различения и сортировки в будущем
+        // клиентов, у них есть свой 16 байтный хэш
         QByteArray getIdHash() const;
+
+        // На сервере хранится информация о клиенте
+        // Эта функция вернет ОС клиента.
         QString getOs() const;
+
+        // -//-
+        // Вернет тип девайса клиента (desktop / mobile  и прочие)
         QString getDevice() const;
+
         QString getCaption() const;
+
+        // Вернет статус клиента
         ClientStatus getStatus() const;
+
         quint32 getLastSeen() const;
         qint32 getIp() const;
         void setSeen();
@@ -56,7 +79,7 @@ namespace delta3
         void parseList();
         void parseTransmit();
         void parseDisconnect();
-        void parsePing();
+        void sendPong();
         void parseSetInfo();
 
     private:

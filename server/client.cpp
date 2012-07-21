@@ -14,7 +14,7 @@ namespace delta3
         { CMD1_AUTH, &Client::parseClientAuth },
         { CMD1_LIST, &Client::parseList },
         { CMD1_TRANSMIT, &Client::parseTransmit },
-        { CMD1_PING, &Client::parsePing },
+        { CMD1_PING, &Client::sendPong },
         { CMD1_DISCONNECT, &Client::parseDisconnect },
         { CMD1_SETINFO, &Client::parseSetInfo },
     };
@@ -129,10 +129,10 @@ namespace delta3
         clientInfo->deviceType = getClientDevice(buf_);
 
         ClientInfoStorage::ClientInfo storeInfo;
-        storeInfo.hash=clientInfo->hash;
-        storeInfo.ip=QHostAddress(getIp());         // TODO: some refactor here!!
-        storeInfo.os=clientInfo->os;                // storeInfo for saving client;
-        storeInfo.device=clientInfo->deviceType;    // clientInfo - for client? mb not needed?
+        storeInfo.hash = clientInfo->hash;
+        storeInfo.ip = QHostAddress(getIp());         // TODO: some refactor here!!
+        storeInfo.os = clientInfo->os;                // storeInfo for saving client;
+        storeInfo.device = clientInfo->deviceType;    // clientInfo - for client? mb not needed?
 
         storage_->updateClient(storeInfo);  // to storage
 
@@ -197,7 +197,7 @@ namespace delta3
             onDataReceived();   // If something in buffer - parse again
     }
 
-    void Client::parsePing()
+    void Client::sendPong()
     {
         qDebug() << "Ping received!";
         if (buf_.size()<3) // TODO: remove magic number
