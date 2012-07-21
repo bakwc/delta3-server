@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtGlobal>
+#include <QString>
 
 namespace delta3
 {
@@ -15,6 +16,8 @@ namespace delta3
     const qint16 CMD1_ADM_SIZE = 47;    // Admin authorisation packet size
     const qint16 CMD1_CLIENT_INFO_SIZE = 92;    // Client info struct size
     const qint16 CMD1_SETINFO_SIZE = 35;    // Setinfo size
+
+    const QString STORAGE_FILE = "storage.dat";
 
     enum Cspyp1Command
     {

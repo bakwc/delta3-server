@@ -2,9 +2,12 @@
 #include <QtGlobal>
 #include <QString>
 #include <QByteArray>
+#include <QStringList>
 #include <QHostAddress>
 #include <QMap>
 #include <QObject>
+#include <QFile>
+#include <QTextStream>
 #include <ctime>
 #include "defines.h"
 
@@ -33,5 +36,6 @@ public:
 
 private:
     QMap<QByteArray, ClientInfo> clients_;
+    bool changed_;
 };
 
