@@ -2,13 +2,23 @@
 #include <QtGlobal>
 #include <QString>
 #include <QByteArray>
+#include <QStringList>
 #include <QHostAddress>
 #include <QMap>
 #include <QObject>
+#include <QFile>
+#include <QTextStream>
 #include <ctime>
 #include "defines.h"
 
-
+/**
+ * Класс, обеспечивающий хранение информации о клиентах.
+ *
+ * Вся информация о клиентах сохраняется в файл, и затем загружается
+ * при новом запуске сервера. В этом классе есть методы загрузки и
+ * сохранения, а так же различные методы по добавлению и извлечению
+ * информации об одном клиенте.
+ */
 class ClientInfoStorage: public QObject
 {
     Q_OBJECT
@@ -33,5 +43,6 @@ public:
 
 private:
     QMap<QByteArray, ClientInfo> clients_;
+    bool changed_;
 };
 

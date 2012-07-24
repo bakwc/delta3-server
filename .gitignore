@@ -24,3 +24,5 @@ test/debug*/
 
 *.Debug
 *.Release
+
+server/*.dat

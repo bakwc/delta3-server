@@ -20,6 +20,7 @@ namespace delta3
     {
         connect(tcpServer_,SIGNAL(newConnection()),
                 this,SLOT(onNewConnection()));
+        storage_->load();
         qDebug() << "Server started";
     }
 
@@ -83,6 +84,7 @@ namespace delta3
         {
             if (i.value()->getStatus()==ST_DISCONNECTED)
                 continue;
+                // TODO: remove disconnected clients from clients_ to prevent memory leak
 
             if (i.value()->getLastSeen()>MAX_UNACTIVE_TIME)
             {
@@ -96,6 +98,7 @@ namespace delta3
                 i.value()->ping();
             }
         }
+        storage_->save();
     }
 
     void Server::resendListToAdmins()
