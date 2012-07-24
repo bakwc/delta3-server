@@ -1,3 +1,16 @@
+/*!
+ * @file server.h
+ * Write description of source file here for dOxygen.
+ *
+ * @brief Can use "brief" tag to explicitly generate comments for file documentation.
+ *
+ * @author Me
+   [Note: depricated practice as CM systems like Subversion will maintain author info and blame logs.]
+ * @version 1.69
+   [Note: depricated practice as CM systems like Subversion will maintain file history and revision numbers.]
+ */
+// $Log$
+
 #pragma once
 
 #include <QObject>

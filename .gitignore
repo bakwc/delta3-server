@@ -26,3 +26,7 @@ test/debug*/
 *.Release
 
 server/*.dat
+#Doxygen
+html
+latex
+
