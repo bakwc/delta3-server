@@ -62,6 +62,7 @@ namespace delta3
                 clientNum++;
             }
         }
+        qDebug() << "Connected clients: " << clientNum;
         result=toBytes(clientNum)+result;
         return result;
     }

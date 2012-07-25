@@ -46,7 +46,7 @@ namespace delta3
 
     void Client::onDataReceived()
     {
-        qDebug() << "onDataReceived():";
+        //qDebug() << "onDataReceived():";
         buf_+=socket_->readAll();
         setSeen();
 
@@ -199,11 +199,11 @@ namespace delta3
 
     void Client::sendPong()
     {
-        qDebug() << "Ping received!";
+        //qDebug() << "Ping received!";
         if (buf_.size()<3) // TODO: remove magic number
             return;     // not all data avaliable
 
-        qDebug() << "Ping parsed!";
+        //qDebug() << "Ping parsed!";
 
         buf_ = buf_.right(buf_.size() - 3);
         if (buf_.size() > 0)
