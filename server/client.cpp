@@ -266,6 +266,7 @@ namespace delta3
             return;
         }
 
+
         if (buf_.size()<9) // TODO: remove magic number
             return;     // not all data avaliable
 
@@ -278,6 +279,20 @@ namespace delta3
         qint16 clientId=getClientId(buf_);
 
         QByteArray cmd=getPacketData(buf_);
+
+        if (this->status_ == ST_CLIENT)
+            if (getClientInfo()->admins.find(clientId) ==
+                    getClientInfo()->admins.end())
+            {   // If no admin speaking with client
+                qDebug() << "cmd not allowed";
+                this->disconnectFromHost();
+                return;
+            }
+
+        if (this->status_ == ST_ADMIN)
+        {
+            this->getServer()->setAdminTalkingWithClient(clientId, this->getId());
+        }
 
         QByteArray response;
         response.append(CSPYP1_PROTOCOL_ID);
@@ -320,6 +335,13 @@ namespace delta3
     quint32 Client::getLastSeen() const
     {
         return time(NULL) - lastSeen_;
+    }
+
+    void Client::addTalkingWithAdmin(qint16 adminId)
+    {
+        if (this->status_ != ST_CLIENT)
+            return;
+        getClientInfo()->admins.insert(adminId);
     }
 
     qint32 Client::getIp() const

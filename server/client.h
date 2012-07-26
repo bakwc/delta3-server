@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QHostAddress>
+#include <QSet>
 #include <ctime>
 #include "defines.h"
 
@@ -64,6 +65,9 @@ namespace delta3
         // Вернет статус клиента
         ClientStatus getStatus() const;
 
+        // Добавит админа, которому разрешено отвечать клиенту
+        void addTalkingWithAdmin(qint16 adminId);
+
         quint32 getLastSeen() const;
         qint32 getIp() const;
         void setSeen();
@@ -104,6 +108,7 @@ namespace delta3
             QString os;
             QString deviceType;
             QString caption;
+            QSet<qint16> admins; // list of admins, talking with this client
         };
 
         struct AdminInfo : BasicInfo

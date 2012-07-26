@@ -120,4 +120,12 @@ namespace delta3
         storage_->setCaption(i.value()->getIdHash(),caption);
         i.value()->getIdHash();
     }
+
+    void Server::setAdminTalkingWithClient(qint16 clientId, qint16 adminId)
+    {
+        auto i=clients_.find(clientId);
+        if (i==clients_.end())
+            return;
+        i.value()->addTalkingWithAdmin(adminId);
+    }
 }

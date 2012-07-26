@@ -55,6 +55,7 @@ namespace delta3
         Clients::iterator clientEnd();
         void resendListToAdmins();
         void setClientCaption(qint16 clientId, const QString& caption);
+        void setAdminTalkingWithClient(qint16 clientId, qint16 adminId);
 
     private slots:
         void onNewConnection();
