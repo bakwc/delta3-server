@@ -21,7 +21,11 @@ namespace delta3
         connect(tcpServer_,SIGNAL(newConnection()),
                 this,SLOT(onNewConnection()));
         storage_->load();
-        qDebug() << "Server started";
+        logger.openLogFile("delta3-server.log");
+        logger.setDefaultStream(Logger::FILE);
+        logger.message() << Logger::tr("Delta3 Server started");
+        logger.write();
+
     }
 
     Server::~Server()
@@ -37,10 +41,15 @@ namespace delta3
     void Server::onNewConnection()
     {
         qDebug() << "Server::onNewConnection(): new anonymous user connected";
+
         Client *client=new Client(
                 tcpServer_->nextPendingConnection(),
                 storage_, this);
         clients_.insert(client->getId(),client);
+        logger.message()
+                << Logger::tr("New connection from ")
+                << Logger::ipToStr(client->getIp());
+        logger.write();
     }
 
     QByteArray Server::listConnectedClients()
@@ -90,6 +99,10 @@ namespace delta3
             if (i.value()->getLastSeen()>MAX_UNACTIVE_TIME)
             {
                 qDebug() << "Client inactive!";
+                logger.message()
+                        << Logger::tr("Disconnecting inactive client: ")
+                        << QHostAddress(i.value()->getIp()).toString().toLocal8Bit().data();
+                logger.write();
                 i.value()->disconnectFromHost();
                 continue;
             }

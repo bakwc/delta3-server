@@ -20,6 +20,7 @@
 #include <QTimerEvent>
 
 #include "clientinfostorage.h"
+#include "logger.h"
 #include "defines.h"
 
 namespace delta3
@@ -56,6 +57,7 @@ namespace delta3
         void resendListToAdmins();
         void setClientCaption(qint16 clientId, const QString& caption);
         void setAdminTalkingWithClient(qint16 clientId, qint16 adminId);
+        Logger logger;
 
     private slots:
         void onNewConnection();
@@ -67,5 +69,6 @@ namespace delta3
         QTcpServer* tcpServer_;
         Clients clients_;
         ClientInfoStorage *storage_;
+
     };
 }

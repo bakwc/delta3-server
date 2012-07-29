@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     application.cpp \
     client.cpp \
     netextract.cpp \
-    clientinfostorage.cpp
+    clientinfostorage.cpp \
+    logger.cpp
 
 HEADERS += \
     server.h \
@@ -29,9 +30,12 @@ HEADERS += \
     defines.h \
     utils.h \
     netextract.h \
-    clientinfostorage.h
+    clientinfostorage.h \
+    logger.h
 
 # enabling tests
 #CONFIG += testcase
 #include (test1.pri)
+
+
 
