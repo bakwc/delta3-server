@@ -31,11 +31,13 @@ HEADERS += \
     utils.h \
     netextract.h \
     clientinfostorage.h \
-    logger.h
+    logger.h \
+    logmessage.h
 
 # enabling tests
 #CONFIG += testcase
 #include (test1.pri)
+
 
 
 

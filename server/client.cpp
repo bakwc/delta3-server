@@ -141,7 +141,12 @@ namespace delta3
 
         this->clientInfo_.reset(clientInfo); // to self
 
-        qDebug() << "new client authorized";
+        qDebug() << "new client authorized from" << Logger::hostAddressToStr(storeInfo.ip);
+        qDebug() << tr("Successful client authentication from ip address: ");
+        getServer()->logger.message()
+                   << tr("Successful client authentication from ip address: ")
+                   << Logger::hostAddressToStr(storeInfo.ip);
+        getServer()->logger.write();
 
         this->getServer()->resendListToAdmins();
 
@@ -168,9 +173,9 @@ namespace delta3
         {
             qDebug() << "auth failed";
             getServer()->logger.message()
-                       << Logger::tr("Failed admin authentication from client ")
+                       << tr("Failed admin authentication from client ")
                        << Logger::ipToStr(getIp())
-                       << Logger::tr(", username ")
+                       << tr(", username ")
                        << getAdminLogin(buf_);
             getServer()->logger.write();
 
@@ -186,9 +191,9 @@ namespace delta3
         this->clientInfo_.reset(adminInfo);
 
         getServer()->logger.message()
-                   << Logger::tr("Successful admin authentication from client ")
+                   << tr("Successful admin authentication from client ")
                    << Logger::ipToStr(getIp())
-                   << Logger::tr(", username ")
+                   << tr(", username ")
                    << getAdminLogin(buf_);
         getServer()->logger.write();
 
@@ -307,6 +312,12 @@ namespace delta3
         if (this->status_ == ST_ADMIN)
         {
             this->getServer()->setAdminTalkingWithClient(clientId, this->getId());
+/*            getServer()->logger.message()
+                       << tr("Admin ") << this->getId() << tr("started session with client ")
+                       << clientId
+                       << tr("[ ]");
+            getServer()->logger.write();
+*/
         }
 
         QByteArray response;

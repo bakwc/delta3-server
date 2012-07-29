@@ -23,7 +23,7 @@ namespace delta3
         storage_->load();
         logger.openLogFile("delta3-server.log");
         logger.setDefaultStream(Logger::FILE);
-        logger.message() << Logger::tr("Delta3 Server started");
+        logger.message() << Logger::toChar(tr("Delta3 Server started"));
         logger.write();
 
     }
@@ -47,7 +47,7 @@ namespace delta3
                 storage_, this);
         clients_.insert(client->getId(),client);
         logger.message()
-                << Logger::tr("New connection from ")
+                << Logger::toChar(tr("New connection from "))
                 << Logger::ipToStr(client->getIp());
         logger.write();
     }
@@ -100,7 +100,7 @@ namespace delta3
             {
                 qDebug() << "Client inactive!";
                 logger.message()
-                        << Logger::tr("Disconnecting inactive client: ")
+                        << tr("Disconnecting inactive client: ")
                         << QHostAddress(i.value()->getIp()).toString().toLocal8Bit().data();
                 logger.write();
                 i.value()->disconnectFromHost();

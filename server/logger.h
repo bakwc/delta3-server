@@ -8,6 +8,7 @@
 #include <QHostAddress>
 #include <QFile>
 #include <QDebug>
+#include "logmessage.h"
 
 
 namespace delta3 {
@@ -24,48 +25,21 @@ public:
     enum OutputStream { COUT, FILE };
 
     Logger() : cout_(new QTextStream(stdout,QIODevice::WriteOnly)), fout_(0), file(0) { defaultStream = cout_; }
-    ~Logger() {
-        closeLogFile();
-    }
+    ~Logger();
 
-    inline QDebug message() { return QDebug(&buffer); }
+    inline LogMessage message() { return LogMessage(&buffer); }
 
     inline void toCout()    { toTextStream(cout_); }
     inline void toLogFile() { toTextStream(fout_); }
-
-    inline static const char* tr(const char* str) { return QObject::tr(str).toLocal8Bit().data(); }
-    inline static const char* ipToStr(qint64 addr) { return QHostAddress(addr).toString().toLocal8Bit().data(); }
-
-    inline void setDefaultStream( OutputStream o)
-    {
-        if (o == COUT)
-            defaultStream=cout_;
-        else if (o == FILE) {
-            if (fout_ != 0)
-                defaultStream = fout_;
-            else
-                qWarning() << "Can't change default stream for Logger";
-        }
-
-    }
-
     inline void write() { toTextStream(defaultStream); buffer = "";}
 
-    void openLogFile(const QString& fileName) {
-        this->fileName = fileName;
-        file = new QFile(fileName);
-        if (file->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
-            fout_ = new QTextStream(file);
-        } else {
-            qWarning() << "Error opening log file '" << fileName << "'.";
-        }
+    inline static char* toChar(QString str) { return str.toLocal8Bit().data(); }
+    inline static const QString ipToStr(qint64 addr) { return QHostAddress(addr).toString(); }
+    inline static const QString hostAddressToStr(QHostAddress& addr) { return addr.toString(); }
 
-    }
-
-    void closeLogFile() {
-        if (file != 0 && file->isOpen())
-            file->close();
-    }
+    void setDefaultStream( OutputStream o);
+    void openLogFile(const QString& fileName);
+    void closeLogFile();
 
 private:
     QString buffer;
@@ -75,17 +49,7 @@ private:
     QFile *file;
     QTextStream *defaultStream;
 
-    void toTextStream(QTextStream* stream) {
-        QString outString = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss");
-        outString.append(infoPrefix);
-        outString.append(buffer);
-        if (stream != 0) {
-            (*stream) << outString << endl;
-            (stream)->flush();
-        } else {
-            qWarning() << "Logger QTextStream is not initialized.";
-        }
-    }
+    void toTextStream(QTextStream* stream);
 
 };
 } /* namespace delta3 */
