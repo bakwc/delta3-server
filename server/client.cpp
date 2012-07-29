@@ -5,6 +5,7 @@
 #include "server.h"
 #include "utils.h"
 #include "clientinfostorage.h"
+#include "logger.h"
 
 
 namespace delta3
@@ -166,6 +167,13 @@ namespace delta3
                 getAdminPassword(buf_) != "admin")
         {
             qDebug() << "auth failed";
+            getServer()->logger.message()
+                       << Logger::tr("Failed admin authentication from client ")
+                       << Logger::ipToStr(getIp())
+                       << Logger::tr(", username ")
+                       << getAdminLogin(buf_);
+            getServer()->logger.write();
+
             this->disconnectFromHost();
             return;
         }
@@ -176,6 +184,13 @@ namespace delta3
         adminInfo->login = getAdminLogin(buf_);
         adminInfo->pass = getAdminPassword(buf_);
         this->clientInfo_.reset(adminInfo);
+
+        getServer()->logger.message()
+                   << Logger::tr("Successful admin authentication from client ")
+                   << Logger::ipToStr(getIp())
+                   << Logger::tr(", username ")
+                   << getAdminLogin(buf_);
+        getServer()->logger.write();
 
         qDebug() << "New admin authorized:";
 
