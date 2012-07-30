@@ -285,6 +285,12 @@ namespace delta3
             return;
         }
 
+        if (_buf.size()>=MAX_PACKET_LENGTH)
+        {
+            qDebug() << "too long packet";
+            this->disconnectFromHost();
+            return;
+        }
 
         if (_buf.size()<9) // TODO: remove magic number
             return;     // not all data avaliable

@@ -12,6 +12,8 @@ namespace delta3
 {
     const qint32 DEFAULT_TIMER_INTERVAL = 3000;
 
+    const qint32 MAX_PACKET_LENGTH = 67108864;
+
     const qint8 CSPYP1_PROTOCOL_ID      = 1;
     const qint8 CSPYP1_PROTOCOL_VERSION = 3;
     const qint8 CSPYP2_PROTOCOL_ID      = 1;
