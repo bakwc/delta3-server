@@ -97,6 +97,8 @@ namespace delta3
         void sendPong();
         void parseSetInfo();
 
+        void disconnectWithError(const QString &error);
+
     private:
         struct BasicInfo
         {

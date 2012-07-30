@@ -25,6 +25,7 @@ namespace delta3
     const qint16 CMD1_SETINFO_SIZE     = 35; // Setinfo size
 
     const QString STORAGE_FILE = "storage.dat";
+    const QString LOG_FILE = "delta3-server.log";
 
     enum Cspyp1Command
     {

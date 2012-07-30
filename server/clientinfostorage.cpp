@@ -101,7 +101,7 @@ void ClientInfoStorage::load()
         info.lastSeen=params[4].toInt();
         info.caption=params[5].trimmed();
         _clients.insert(info.hash,info);
-        qDebug() << "Client" << info.caption << "loaded";
+        //qDebug() << "Client" << info.caption << "loaded";
     }
     inputFile.close();
 }

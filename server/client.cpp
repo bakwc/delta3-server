@@ -108,15 +108,11 @@ namespace delta3
 
     void Client::parseClientAuth()
     {
-        qDebug() << "parseClientAuth():";
+        //qDebug() << "parseClientAuth():";
         if (this->_status != ST_CONNECTED)
-        {
-            qDebug() << "cmd not allowed";
-            this->disconnectFromHost();
-            return;
-        }
+            this->disconnectWithError(tr("command not allowed"));
 
-        qDebug() << _buf.size();
+        //qDebug() << _buf.size();
 
         if (_buf.size() < CMD1_AUTH_SIZE)
             return;     // not all data avaliable
@@ -140,8 +136,8 @@ namespace delta3
 
         this->_clientInfo.reset(clientInfo); // to self
 
-        qDebug() << "new client authorized from" << Logger::hostAddressToStr(storeInfo.ip);
-        qDebug() << tr("Successful client authentication from ip address: ");
+        qDebug() << tr("Successful client authentication from ip address: ")
+                    << Logger::hostAddressToStr(storeInfo.ip);
         getLogger().message()
                    << tr("Successful client authentication from ip address: ")
                    << Logger::hostAddressToStr(storeInfo.ip);
@@ -156,13 +152,9 @@ namespace delta3
 
     void Client::parseAdminAuth()
     {
-        qDebug() << "parseAmdinAuth():";
+        //qDebug() << "parseAmdinAuth():";
         if (this->_status != ST_CONNECTED)
-        {
-            qDebug() << "cmd not allowed";
-            this->disconnectFromHost();
-            return;
-        }
+          this->disconnectWithError(tr("command not allowed"));
 
         if (_buf.size() < CMD1_ADM_SIZE)
             return;     // not all data avaliable
@@ -193,10 +185,13 @@ namespace delta3
                    << tr("Successful admin authentication from client ")
                    << Logger::ipToStr(getIp())
                    << tr(", username ")
-                   << getAdminLogin(_buf);
+                   << adminInfo->login;
         getLogger().write();
 
-        qDebug() << "New admin authorized:";
+        qDebug() << tr("Successful admin authentication from client ")
+                 << Logger::ipToStr(getIp())
+                 << tr(", username ")
+                 << adminInfo->login;
 
         _buf = _buf.right(_buf.size() - CMD1_ADM_SIZE);
         if (_buf.size() > 0)
@@ -208,7 +203,12 @@ namespace delta3
         if (_buf.size() < 3) // TODO: remove magic number
             return;     // not all data avaliable
 
-        qDebug() << "parseDisconnect():";
+        getLogger().message() << QHostAddress(getIp()).toString()
+                              << tr(" disconnected");
+
+        qDebug() << QHostAddress(getIp()).toString()
+                 << tr(" disconnected");
+
         this->disconnectFromHost();
 
         _buf=_buf.right(_buf.size() - 3);
@@ -231,16 +231,12 @@ namespace delta3
 
     void Client::parseSetInfo()
     {
-        qDebug() << "SetInfo received!";
+        //qDebug() << "SetInfo received!";
 
         if (this->_status!=ST_ADMIN)
-        {
-            qDebug() << "cmd not allowed";
-            this->disconnectFromHost();
-            return;
-        }
+            this->disconnectWithError(tr("command not allowed"));
 
-        if (_buf.size()< CMD1_SETINFO_SIZE) // TODO: remove magic number
+        if (_buf.size()< CMD1_SETINFO_SIZE)
             return;     // not all data avaliable
 
         qint16 clientId=getClientId(_buf);
@@ -256,13 +252,9 @@ namespace delta3
 
     void Client::parseList()
     {
-        qDebug() << "parseList():";
+        //qDebug() << "parseList():";
         if (this->_status!=ST_ADMIN)
-        {
-            qDebug() << "cmd not allowed";
-            this->disconnectFromHost();
-            return;
-        }
+            this->disconnectWithError(tr("command not allowed"));
 
         if (_buf.size()<3) // TODO: remove magic number
             return;     // not all data avaliable
@@ -276,27 +268,19 @@ namespace delta3
 
     void Client::parseTransmit()
     {
-        qDebug() << "parseTransmit():";
+        //qDebug() << "parseTransmit():";
         if ( !(this->_status == ST_ADMIN ||
                this->_status == ST_CLIENT))
-        {
-            qDebug() << "cmd not allowed";
-            this->disconnectFromHost();
-            return;
-        }
+            this->disconnectWithError(tr("command not allowed"));
 
         if (_buf.size()>=MAX_PACKET_LENGTH)
-        {
-            qDebug() << "too long packet";
-            this->disconnectFromHost();
-            return;
-        }
+            this->disconnectWithError(tr("too long packet"));
 
         if (_buf.size()<9) // TODO: remove magic number
             return;     // not all data avaliable
 
-        qDebug() << "buf size" << _buf.size();
-        qDebug() << "packet len" << getPacketLength(_buf);
+        //qDebug() << "buf size" << _buf.size();
+        //qDebug() << "packet len" << getPacketLength(_buf);
 
         if (_buf.size()<getPacketLength(_buf)+9) // TODO: remove magic number
             return; // not all data avaliable
@@ -308,21 +292,26 @@ namespace delta3
         if (this->_status == ST_CLIENT)
             if (getClientInfo()->admins.find(clientId) ==
                     getClientInfo()->admins.end())
-            {   // If no admin speaking with client
-                qDebug() << "cmd not allowed";
-                this->disconnectFromHost();
-                return;
-            }
+               // If no admin speaking with client
+                this->disconnectWithError(tr("command not allowed"));
 
         if (this->_status == ST_ADMIN)
         {
             this->getServer()->setAdminTalkingWithClient(clientId, this->getId());
-/*            getServer()->logger.message()
-                       << tr("Admin ") << this->getId() << tr("started session with client ")
-                       << clientId
-                       << tr("[ ]");
-            getServer()->logger.write();
-*/
+            /*  TODO: Fix this code to work!
+            auto cli=getServer()->searchClient(clientId);
+            QString cliIp;
+            if (cli!=getServer()->clientEnd())
+                cliIp=QHostAddress(cli.value()->getIp()).toString();
+            getLogger().message()
+                       << tr("Admin ") << this->getAdminInfo()->login
+                       << tr("started session with client ")
+                       << cliIp;
+            getLogger().write();
+            qDebug() << tr("Admin ") << this->getAdminInfo()->login
+                     << tr("started session with client ")
+                     << cliIp;
+                     */
         }
 
         QByteArray response;
@@ -334,11 +323,11 @@ namespace delta3
         response.append(cmd);
 
         auto destClient = getServer()->searchClient(clientId);
-        qDebug() << "Client to ID:" << clientId;
+        //qDebug() << "Client to ID:" << clientId;
 
         if (destClient != getServer()->clientEnd())
         {
-            qDebug() << "transmiting data..";
+            //qDebug() << "transmiting data..";
             destClient.value()->send(response);
         }
 
@@ -399,13 +388,25 @@ namespace delta3
 
     void Client::disconnectFromHost()
     {
-        qDebug() << "disconnectFromHost()";
+        //qDebug() << "disconnectFromHost()";
         _socket->disconnectFromHost();
 
         _clientInfo.reset();
 
         _status = ST_DISCONNECTED;
         getServer()->resendListToAdmins();
+    }
+
+    void Client::disconnectWithError(const QString& error)
+    {
+        getLogger().message() << QHostAddress(getIp()).toString()
+                              << " - error (disoconnecting) - "
+                              << error;
+        qDebug() << QHostAddress(getIp()).toString()
+                 << " - error (disoconnecting) - "
+                 << error;
+        getLogger().write();
+        this->disconnectFromHost();
     }
 
     void Client::sendList(const QByteArray& list)
