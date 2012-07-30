@@ -57,7 +57,7 @@ namespace delta3
         void resendListToAdmins();
         void setClientCaption(qint16 clientId, const QString& caption);
         void setAdminTalkingWithClient(qint16 clientId, qint16 adminId);
-        Logger logger;
+        inline Logger& getLogger() {return _logger;}
 
     private slots:
         void onNewConnection();
@@ -66,9 +66,9 @@ namespace delta3
         void timerEvent( QTimerEvent* event );
 
     private:
-        QTcpServer* tcpServer_;
-        Clients clients_;
-        ClientInfoStorage *storage_;
-
+        Logger _logger;
+        QTcpServer* _tcpServer;
+        Clients _clients;
+        ClientInfoStorage *_storage;
     };
 }

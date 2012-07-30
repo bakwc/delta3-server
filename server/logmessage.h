@@ -1,17 +1,16 @@
-#ifndef LOGMESSAGE_H
-#define LOGMESSAGE_H
+#pragma once
 
 namespace delta3 {
 class LogMessage
 {
     struct Stream {
-        Stream(QString *string) : ts(string, QIODevice::WriteOnly), ref(1), type(QtDebugMsg), space(true), message_output(false) {}
+        Stream(QString *string) : ts(string, QIODevice::WriteOnly), ref(1), type(QtDebugMsg), space(true), messageOutput(false) {}
         QTextStream ts;
         QString buffer;
         int ref;
         QtMsgType type;
         bool space;
-        bool message_output;
+        bool messageOutput;
     } *stream;
 public:
     inline LogMessage(QString *string) : stream(new Stream(string)) {}
@@ -19,7 +18,7 @@ public:
     inline LogMessage &operator=(const LogMessage &other);
     inline ~LogMessage() {
         if (!--stream->ref) {
-            if(stream->message_output) {
+            if(stream->messageOutput) {
                qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
             }
             delete stream;
@@ -59,5 +58,3 @@ public:
 
 }
 
-
-#endif // LOGMESSAGE_H

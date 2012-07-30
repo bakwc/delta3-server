@@ -17,6 +17,7 @@ class ClientInfoStorage;
 namespace delta3
 {
     class Server;
+    class Logger;
 
     /**
      * Класс, в котором сосредоточена информация о клиенте
@@ -102,7 +103,7 @@ namespace delta3
             virtual ~BasicInfo() {}
         };
 
-        struct ClientInfo : BasicInfo
+        struct ClientInfo: BasicInfo
         {
             QByteArray hash;
             QString os;
@@ -111,7 +112,7 @@ namespace delta3
             QSet<qint16> admins; // list of admins, talking with this client
         };
 
-        struct AdminInfo : BasicInfo
+        struct AdminInfo: BasicInfo
         {
             QString login;
             QString pass;
@@ -121,13 +122,14 @@ namespace delta3
         Server *getServer() const;
         ClientInfo *getClientInfo() const;
         AdminInfo *getAdminInfo() const;
+        Logger& getLogger() const;
 
     private:
-        quint32 lastSeen_;   //timestamp
-        QTcpSocket* socket_;
-        ClientInfoStorage *storage_;
-        std::unique_ptr<BasicInfo> clientInfo_;
-        ClientStatus status_;
-        QByteArray buf_;
+        quint32 _lastSeen;   //timestamp
+        QTcpSocket *_socket;
+        ClientInfoStorage *_storage;
+        std::unique_ptr<BasicInfo> _clientInfo;
+        ClientStatus _status;
+        QByteArray _buf;
     };
 }

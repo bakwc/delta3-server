@@ -15,16 +15,16 @@ namespace delta3
 {
     Server::Server(QObject *parent):
         QObject(parent),
-        tcpServer_(new QTcpServer(this)),
-        storage_(new ClientInfoStorage(this))
+        _tcpServer(new QTcpServer(this)),
+        _storage(new ClientInfoStorage(this))
     {
-        connect(tcpServer_,SIGNAL(newConnection()),
+        connect(_tcpServer,SIGNAL(newConnection()),
                 this,SLOT(onNewConnection()));
-        storage_->load();
-        logger.openLogFile("delta3-server.log");
-        logger.setDefaultStream(Logger::FILE);
-        logger.message() << Logger::toChar(tr("Delta3 Server started"));
-        logger.write();
+        _storage->load();
+        _logger.openLogFile("delta3-server.log");
+        _logger.setDefaultStream(Logger::FILE);
+        _logger.message() << Logger::toChar(tr("Delta3 Server started"));
+        _logger.write();
 
     }
 
@@ -35,7 +35,7 @@ namespace delta3
     bool Server::start()
     {
         startTimer( DEFAULT_TIMER_INTERVAL );
-        return tcpServer_->listen(QHostAddress("0.0.0.0"), DEFAULT_PORT);
+        return _tcpServer->listen(QHostAddress("0.0.0.0"), DEFAULT_PORT);
     }
 
     void Server::onNewConnection()
@@ -43,20 +43,20 @@ namespace delta3
         qDebug() << "Server::onNewConnection(): new anonymous user connected";
 
         Client *client=new Client(
-                tcpServer_->nextPendingConnection(),
-                storage_, this);
-        clients_.insert(client->getId(),client);
-        logger.message()
+                _tcpServer->nextPendingConnection(),
+                _storage, this);
+        _clients.insert(client->getId(),client);
+        _logger.message()
                 << Logger::toChar(tr("New connection from "))
                 << Logger::ipToStr(client->getIp());
-        logger.write();
+        _logger.write();
     }
 
     QByteArray Server::listConnectedClients()
     {
         QByteArray result;
         qint16 clientNum=0;
-        for (auto i=clients_.begin();i!=clients_.end();i++)
+        for (auto i=_clients.begin();i!=_clients.end();i++)
         {
             if (i.value()->getStatus()==ST_CLIENT)
             {
@@ -78,19 +78,19 @@ namespace delta3
 
     Clients::iterator Server::searchClient(qint32 clientId)
     {
-        return clients_.find(clientId);
+        return _clients.find(clientId);
     }
 
     Clients::iterator Server::clientEnd()
     {
-        return clients_.end();
+        return _clients.end();
     }
 
     void Server::timerEvent( QTimerEvent* event )
     {
         Q_UNUSED( event );
 
-        for (auto i=clients_.begin();i!=clients_.end();i++)
+        for (auto i=_clients.begin();i!=_clients.end();i++)
         {
             if (i.value()->getStatus()==ST_DISCONNECTED)
                 continue;
@@ -99,10 +99,10 @@ namespace delta3
             if (i.value()->getLastSeen()>MAX_UNACTIVE_TIME)
             {
                 qDebug() << "Client inactive!";
-                logger.message()
+                _logger.message()
                         << tr("Disconnecting inactive client: ")
                         << QHostAddress(i.value()->getIp()).toString().toLocal8Bit().data();
-                logger.write();
+                _logger.write();
                 i.value()->disconnectFromHost();
                 continue;
             }
@@ -112,32 +112,32 @@ namespace delta3
                 i.value()->ping();
             }
         }
-        storage_->save();
+        _storage->save();
     }
 
     void Server::resendListToAdmins()
     {
         qDebug() << "Sending list!";
         QByteArray clientList=listConnectedClients();
-        for (auto i=clients_.begin();i!=clients_.end();i++)
+        for (auto i=_clients.begin();i!=_clients.end();i++)
             if (i.value()->getStatus()==ST_ADMIN)
                 i.value()->sendList(clientList);
     }
 
     void Server::setClientCaption(qint16 clientId, const QString& caption)
     {
-        auto i=clients_.find(clientId);
-        if (i==clients_.end())
+        auto i=_clients.find(clientId);
+        if (i==_clients.end())
             return;
         i.value()->setCaption(caption);
-        storage_->setCaption(i.value()->getIdHash(),caption);
+        _storage->setCaption(i.value()->getIdHash(),caption);
         i.value()->getIdHash();
     }
 
     void Server::setAdminTalkingWithClient(qint16 clientId, qint16 adminId)
     {
-        auto i=clients_.find(clientId);
-        if (i==clients_.end())
+        auto i=_clients.find(clientId);
+        if (i==_clients.end())
             return;
         i.value()->addTalkingWithAdmin(adminId);
     }

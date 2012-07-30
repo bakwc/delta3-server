@@ -1,5 +1,4 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
 #include <QObject>
 #include <QString>
@@ -24,14 +23,14 @@ public:
 
     enum OutputStream { COUT, FILE };
 
-    Logger() : cout_(new QTextStream(stdout,QIODevice::WriteOnly)), fout_(0), file(0) { defaultStream = cout_; }
+    Logger() : _cout(new QTextStream(stdout,QIODevice::WriteOnly)), _fout(0), _file(0) { _defaultStream = _cout; }
     ~Logger();
 
     inline LogMessage message() { return LogMessage(&buffer); }
 
-    inline void toCout()    { toTextStream(cout_); }
-    inline void toLogFile() { toTextStream(fout_); }
-    inline void write() { toTextStream(defaultStream); buffer = "";}
+    inline void toCout()    { toTextStream(_cout); }
+    inline void toLogFile() { toTextStream(_fout); }
+    inline void write() { toTextStream(_defaultStream); buffer = "";}
 
     inline static char* toChar(QString str) { return str.toLocal8Bit().data(); }
     inline static const QString ipToStr(qint64 addr) { return QHostAddress(addr).toString(); }
@@ -43,15 +42,13 @@ public:
 
 private:
     QString buffer;
-    QTextStream *cout_;
-    QTextStream *fout_;
-    QString fileName;
-    QFile *file;
-    QTextStream *defaultStream;
+    QTextStream *_cout;
+    QTextStream *_fout;
+    QString _fileName;
+    QFile *_file;
+    QTextStream *_defaultStream;
 
     void toTextStream(QTextStream* stream);
 
 };
 } /* namespace delta3 */
-
-#endif // LOGGER_H

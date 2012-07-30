@@ -42,7 +42,7 @@ public:
     void load();
 
 private:
-    QMap<QByteArray, ClientInfo> clients_;
-    bool changed_;
+    QMap<QByteArray, ClientInfo> _clients;
+    bool _changed;
 };
 

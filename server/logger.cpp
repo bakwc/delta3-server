@@ -23,15 +23,15 @@ namespace delta3 {
     }
 
     void Logger::closeLogFile() {
-        if (file != 0 && file->isOpen())
-            file->close();
+        if (_file != 0 && _file->isOpen())
+            _file->close();
     }
 
     void Logger::openLogFile(const QString& fileName) {
-        this->fileName = fileName;
-        file = new QFile(fileName);
-        if (file->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
-            fout_ = new QTextStream(file);
+        this->_fileName = fileName;
+        _file = new QFile(fileName);
+        if (_file->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
+            _fout = new QTextStream(_file);
         } else {
             qWarning() << "Error opening log file '" << fileName << "'.";
         }
@@ -40,10 +40,10 @@ namespace delta3 {
     void Logger::setDefaultStream( OutputStream o)
     {
         if (o == COUT)
-           defaultStream=cout_;
+           _defaultStream=_cout;
         else if (o == FILE) {
-           if (fout_ != 0)
-              defaultStream = fout_;
+           if (_fout != 0)
+              _defaultStream = _fout;
            else
               qWarning() << "Can't change default stream for Logger";
         }

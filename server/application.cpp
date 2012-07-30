@@ -6,9 +6,8 @@ namespace delta3
 {
     Application::Application( int& argc, char* argv[] ):
         QCoreApplication( argc, argv ),
-        server_(new Server(this))
+        _server(new Server(this))
     {
-        //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
         QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     }
 
@@ -18,7 +17,7 @@ namespace delta3
 
     bool Application::start()
     {
-        return server_->start();
+        return _server->start();
     }
 
 }

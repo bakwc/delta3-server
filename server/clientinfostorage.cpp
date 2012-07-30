@@ -2,20 +2,20 @@
 
 ClientInfoStorage::ClientInfoStorage(QObject *parent):
     QObject(parent),
-    changed_(false)
+    _changed(false)
 {
 }
 
 void ClientInfoStorage::updateClient(ClientInfo client)
 {
     client.lastSeen=time(NULL);
-    auto i=clients_.find(client.hash);
-    if (i==clients_.end())
+    auto i=_clients.find(client.hash);
+    if (i==_clients.end())
     {
         client.caption=QString("%1 (%2)")
                 .arg(QHostAddress(client.ip).toString())
                 .arg(client.os);
-        clients_.insert(client.hash,client);
+        _clients.insert(client.hash,client);
     } else
     {
         i->hash=client.hash;
@@ -23,38 +23,38 @@ void ClientInfoStorage::updateClient(ClientInfo client)
         i->ip=client.ip;
         i->os=client.os;
     }
-    changed_=true;
+    _changed=true;
 }
 
 void ClientInfoStorage::updateCaption(const QByteArray& hash, const QString& caption)
 {
-    auto i=clients_.find(hash);
-    if (i==clients_.end())
+    auto i=_clients.find(hash);
+    if (i==_clients.end())
         return;
     i->caption=caption;
-    changed_=true;
+    _changed=true;
 }
 
 QString ClientInfoStorage::getCaption(const QByteArray& hash)
 {
-    auto i=clients_.find(hash);
-    if (i==clients_.end())
+    auto i=_clients.find(hash);
+    if (i==_clients.end())
         return "";
     return i->caption;
 }
 
 void ClientInfoStorage::setCaption(const QByteArray& hash, const QString& caption)
 {
-    auto i=clients_.find(hash);
-    if (i==clients_.end())
+    auto i=_clients.find(hash);
+    if (i==_clients.end())
         return;
     i->caption=caption;
-    changed_=true;
+    _changed=true;
 }
 
 void ClientInfoStorage::save()
 {
-    if (!changed_)
+    if (!_changed)
         return;
     QFile outFile(delta3::STORAGE_FILE);
     outFile.open(QIODevice::WriteOnly);
@@ -62,7 +62,7 @@ void ClientInfoStorage::save()
 
     QByteArray lol;
 
-    for (auto i=clients_.begin();i!=clients_.end();i++)
+    for (auto i=_clients.begin();i!=_clients.end();i++)
     {
         out << QString("%1:%2:%3:%4:%5:%6\n")
                .arg((QString)(i->hash.toHex()))
@@ -73,7 +73,7 @@ void ClientInfoStorage::save()
                .arg(i->caption);
      }
     outFile.close();
-    changed_=false;
+    _changed=false;
 }
 
 void ClientInfoStorage::load()
@@ -100,7 +100,7 @@ void ClientInfoStorage::load()
         info.device=params[3];
         info.lastSeen=params[4].toInt();
         info.caption=params[5].trimmed();
-        clients_.insert(info.hash,info);
+        _clients.insert(info.hash,info);
         qDebug() << "Client" << info.caption << "loaded";
     }
     inputFile.close();

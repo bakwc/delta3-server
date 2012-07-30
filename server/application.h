@@ -21,12 +21,12 @@ namespace delta3
     {
         Q_OBJECT
     public:
-        Application( int& argc, char* argv[] );
+        Application(int& argc, char* argv[]);
         ~Application ();
 
         bool start();
 
     private:
-        Server *server_;
+        Server *_server;
     };
 }
