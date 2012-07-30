@@ -94,8 +94,12 @@ namespace delta3
         for (auto i=_clients.begin();i!=_clients.end();i++)
         {
             if (i.value()->getStatus()==ST_DISCONNECTED)
+            {
+                auto j=i+1;
+                _clients.erase(i);
+                i=j--;
                 continue;
-                // TODO: remove disconnected clients from clients_ to prevent memory leak
+            }
 
             if (i.value()->getLastSeen()>MAX_INACTIVE_TIME)
             {
