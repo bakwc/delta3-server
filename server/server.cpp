@@ -95,9 +95,8 @@ namespace delta3
         {
             if (i.value()->getStatus()==ST_DISCONNECTED)
             {
-                auto j=i+1;
-                _clients.erase(i);
-                i=j--;
+                delete i.value();
+                i = _clients.erase(i);
                 continue;
             }
 
