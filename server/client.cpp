@@ -366,7 +366,16 @@ namespace delta3
     {
         if (this->_status != ST_CLIENT)
             return;
-        getClientInfo()->admins.insert(adminId);
+        if (getClientInfo()->admins.contains(adminId))
+            return; // Client already talking to this admin
+        else {
+
+            getServer()->getLogger().message() << tr("Admin id[")
+                                               << adminId << tr("]  started session with client ")
+                                               << getCaption() << ".";
+            getServer()->getLogger().write();
+            getClientInfo()->admins.insert(adminId);
+        }
     }
 
     qint32 Client::getIp() const
