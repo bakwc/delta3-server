@@ -18,6 +18,7 @@
 #include <QtNetwork/QTcpServer>
 #include <QMap>
 #include <QTimerEvent>
+#include <QSettings>
 
 #include "clientinfostorage.h"
 #include "logger.h"
@@ -58,6 +59,7 @@ namespace delta3
         void setClientCaption(qint16 clientId, const QString& caption);
         void setAdminTalkingWithClient(qint16 clientId, qint16 adminId);
         inline Logger& getLogger() {return _logger;}
+        QSettings *settings();
 
     private slots:
         void onNewConnection();

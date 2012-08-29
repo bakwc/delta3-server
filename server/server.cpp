@@ -2,11 +2,11 @@
 
 #include "client.h"
 #include "utils.h"
+#include "application.h"
 
 namespace
 {
     const quint16 DEFAULT_PORT = 1235;
-
     const quint16 MAX_INACTIVE_TIME = 15;
     const quint16 TIME_TO_PING = 5;
 }
@@ -21,7 +21,8 @@ namespace delta3
         connect(_tcpServer,SIGNAL(newConnection()),
                 this,SLOT(onNewConnection()));
         _storage->load();
-        _logger.openLogFile(LOG_FILE);
+
+        _logger.openLogFile(settings()->value("general/logfile", LOG_FILE).toString());
         _logger.setDefaultStream(Logger::FILE);
         _logger.message() << Logger::toChar(tr("Delta3 Server started"));
         _logger.write();
@@ -35,7 +36,9 @@ namespace delta3
     bool Server::start()
     {
         startTimer( DEFAULT_TIMER_INTERVAL );
-        return _tcpServer->listen(QHostAddress("0.0.0.0"), DEFAULT_PORT);
+        return _tcpServer->listen(QHostAddress(
+             settings()->value("network/listen_addr", "0.0.0.0").toString()),
+             settings()->value("network/listen_port", DEFAULT_PORT).toInt());
     }
 
     void Server::onNewConnection()
@@ -44,13 +47,6 @@ namespace delta3
                 _tcpServer->nextPendingConnection(),
                 _storage, this);
         _clients.insert(client->getId(),client);
-        /*
-        _logger.message()
-                << Logger::toChar(tr("New connection from "))
-                << Logger::ipToStr(client->getIp());
-        _logger.write();
-        qDebug()<< Logger::toChar(tr("New connection from "))
-                << Logger::ipToStr(client->getIp());*/
     }
 
     QByteArray Server::listConnectedClients()
@@ -72,7 +68,6 @@ namespace delta3
                 clientNum++;
             }
         }
-        //qDebug() << "Connected clients: " << clientNum;
         result=toBytes(clientNum)+result;
         return result;
     }
@@ -102,7 +97,6 @@ namespace delta3
 
             if (i.value()->getLastSeen()>MAX_INACTIVE_TIME)
             {
-                //qDebug() << "Client inactive!";
                 _logger.message()
                         << tr("Disconnecting inactive client: ")
                         << QHostAddress(i.value()->getIp()).toString().toLocal8Bit().data();
@@ -123,7 +117,6 @@ namespace delta3
 
     void Server::resendListToAdmins()
     {
-        //qDebug() << "Sending list!";
         QByteArray clientList=listConnectedClients();
         for (auto i=_clients.begin();i!=_clients.end();i++)
             if (i.value()->getStatus()==ST_ADMIN)
@@ -146,5 +139,10 @@ namespace delta3
         if (i==_clients.end())
             return;
         i.value()->addTalkingWithAdmin(adminId);
+    }
+
+    QSettings* Server::settings()
+    {
+        return ((Application*)(parent()))->getSettings();
     }
 }

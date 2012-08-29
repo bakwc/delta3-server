@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QTextCodec>
+#include <QSettings>
 
 namespace delta3
 {
@@ -25,8 +26,10 @@ namespace delta3
         ~Application ();
 
         bool start();
+        QSettings* getSettings();
 
     private:
         Server *_server;
+        QSettings *_settings;
     };
 }

@@ -1,4 +1,5 @@
 #include "clientinfostorage.h"
+#include "server.h"
 
 ClientInfoStorage::ClientInfoStorage(QObject *parent):
     QObject(parent),
@@ -56,11 +57,9 @@ void ClientInfoStorage::save()
 {
     if (!_changed)
         return;
-    QFile outFile(delta3::STORAGE_FILE);
+    QFile outFile(settings()->value("general/datafile", delta3::STORAGE_FILE).toString());
     outFile.open(QIODevice::WriteOnly);
     QTextStream out(&outFile);
-
-    QByteArray lol;
 
     for (auto i=_clients.begin();i!=_clients.end();i++)
     {
@@ -78,7 +77,7 @@ void ClientInfoStorage::save()
 
 void ClientInfoStorage::load()
 {
-    QFile inputFile(delta3::STORAGE_FILE);
+    QFile inputFile(settings()->value("general/datafile", delta3::STORAGE_FILE).toString());
 
     if (!inputFile.exists())
         return;
@@ -104,4 +103,9 @@ void ClientInfoStorage::load()
         //qDebug() << "Client" << info.caption << "loaded";
     }
     inputFile.close();
+}
+
+QSettings* ClientInfoStorage::settings()
+{
+    return ((delta3::Server*)(parent()))->settings();
 }

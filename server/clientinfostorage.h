@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QFile>
 #include <QTextStream>
+#include <QSettings>
 #include <ctime>
 #include "defines.h"
 
@@ -40,6 +41,7 @@ public:
     void setCaption(const QByteArray& hash, const QString& caption);
     void save();
     void load();
+    QSettings* settings();
 
 private:
     QMap<QByteArray, ClientInfo> _clients;
