@@ -99,12 +99,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abefb1a23db28d9fa45290a0e4e2b54d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_application.html#abefb1a23db28d9fa45290a0e4e2b54d3">Application</a> (int &amp;argc, char *argv[])</td></tr>
 <tr class="memitem:a51d36f321d7c34165b56ac9244c32981"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_application.html#a51d36f321d7c34165b56ac9244c32981">~Application</a> ()</td></tr>
 <tr class="memitem:a7a3e8085630646effbf7d51e1cf87dc0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_application.html#a7a3e8085630646effbf7d51e1cf87dc0">start</a> ()</td></tr>
+<tr class="memitem:a3f19b10998a884cb8554ff2a28eb8922"><td class="memItemLeft" align="right" valign="top">QSettings *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_application.html#a3f19b10998a884cb8554ff2a28eb8922">getSettings</a> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Класс отвечающий за запуск приложения.</p>
 <p>На данный момент в нём нет практически никакой функциональности, однако в нём планируется организовать парсинг аргументов командной строки, а так же функциональность, которая не относится непосредственно к серверной части. Внутри этого класса создаётся объект класса <a class="el" href="classdelta3_1_1_server.html">Server</a> - большая часть функциональности приложения сосредаточена в нём. </p>
 
-<p>Definition at line <a class="el" href="application_8h_source.html#l00020">20</a> of file <a class="el" href="application_8h_source.html">application.h</a>.</p>
+<p>Definition at line <a class="el" href="application_8h_source.html#l00021">21</a> of file <a class="el" href="application_8h_source.html">application.h</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="abefb1a23db28d9fa45290a0e4e2b54d3"></a>
 <div class="memitem">
@@ -130,7 +131,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="application_8cpp_source.html#l00007">7</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
+<p>Definition at line <a class="el" href="application_8cpp_source.html#l00009">9</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -147,7 +148,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="application_8cpp_source.html#l00014">14</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
+<p>Definition at line <a class="el" href="application_8cpp_source.html#l00018">18</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -165,7 +166,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="application_8cpp_source.html#l00018">18</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
+<p>Definition at line <a class="el" href="application_8cpp_source.html#l00024">24</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3f19b10998a884cb8554ff2a28eb8922"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSettings * delta3::Application::getSettings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="application_8cpp_source.html#l00029">29</a> of file <a class="el" href="application_8cpp_source.html">application.cpp</a>.</p>
 
 </div>
 </div>
@@ -176,7 +194,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:23 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 9 2012 02:19:19 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

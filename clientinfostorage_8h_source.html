@@ -91,40 +91,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;QObject&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QFile&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QTextStream&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;defines.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="class_client_info_storage.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_client_info_storage.html">ClientInfoStorage</a>: <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html">   26</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">   28</a></span>&#160;        QByteArray <a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">   29</a></span>&#160;        QString <a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">   30</a></span>&#160;        QString <a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">device</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">   31</a></span>&#160;        QString <a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">caption</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">   32</a></span>&#160;        QHostAddress <a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">   33</a></span>&#160;        qint32 <a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">lastSeen</a>; <span class="comment">// timestamp</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="class_client_info_storage.html#a76190253123720eb65a99d3fbe633671">ClientInfoStorage</a>(QObject *parent=0);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7161e02ce0829bb5bb33e72c052b60db">updateClient</a>(<a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a> client);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae40dc7c40b83b54375615867caa48ea7">updateCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    QString <a class="code" href="class_client_info_storage.html#a433d8e4450dec59c9e5161f31604e1a4">getCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#aad9ed03b7b6dd6227a1a6582e0e93982">setCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7be36be6a2326a785213e0be2e36a914">save</a>();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae02cbd99d0c7127d584436ad0a8c9190">load</a>();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QMap&lt;QByteArray, ClientInfo&gt; _clients;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">bool</span> _changed;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;QSettings&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;defines.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="class_client_info_storage.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_client_info_storage.html">ClientInfoStorage</a>: <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html">   27</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">   29</a></span>&#160;        QByteArray <a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">   30</a></span>&#160;        QString <a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">   31</a></span>&#160;        QString <a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">device</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">   32</a></span>&#160;        QString <a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">caption</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">   33</a></span>&#160;        QHostAddress <a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">   34</a></span>&#160;        qint32 <a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">lastSeen</a>; <span class="comment">// timestamp</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="class_client_info_storage.html#a76190253123720eb65a99d3fbe633671">ClientInfoStorage</a>(QObject *parent=0);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7161e02ce0829bb5bb33e72c052b60db">updateClient</a>(<a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a> client);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae40dc7c40b83b54375615867caa48ea7">updateCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    QString <a class="code" href="class_client_info_storage.html#a433d8e4450dec59c9e5161f31604e1a4">getCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#aad9ed03b7b6dd6227a1a6582e0e93982">setCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7be36be6a2326a785213e0be2e36a914">save</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae02cbd99d0c7127d584436ad0a8c9190">load</a>();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    QSettings* <a class="code" href="class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4">settings</a>();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QMap&lt;QByteArray, ClientInfo&gt; _clients;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">bool</span> _changed;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:23 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 9 2012 02:19:19 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

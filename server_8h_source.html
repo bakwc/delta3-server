@@ -91,51 +91,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;QtNetwork/QTcpServer&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;QMap&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;QTimerEvent&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;clientinfostorage.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;logger.h&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;defines.h&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span>delta3</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="namespacedelta3.html#acfa6207fdb081b70f8d77082958a7cfe">   28</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classdelta3_1_1_client.html">Client</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">typedef</span> QMap&lt;qint32,Client*&gt; <a class="code" href="namespacedelta3.html#acfa6207fdb081b70f8d77082958a7cfe">Clients</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classdelta3_1_1_server.html">   45</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classdelta3_1_1_server.html">Server</a>: <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        Q_OBJECT</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classdelta3_1_1_server.html#acdc382c37d3b3bd32e2ebd178c6eb37e">Server</a>(QObject* parent = 0);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classdelta3_1_1_server.html#a070c7b4c00dc5186b3cf3ffce89b4d62">~Server</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classdelta3_1_1_server.html#aebd5ccefd5c9e8a43bcce1b0a27fad6d">start</a>();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        QByteArray <a class="code" href="classdelta3_1_1_server.html#ab1fddb9cfc4457368a405f6345a55d47">listConnectedClients</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        Clients::iterator <a class="code" href="classdelta3_1_1_server.html#a994e457bc486b591fe8fbf772b94e552">searchClient</a>(qint32 clientId);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        Clients::iterator <a class="code" href="classdelta3_1_1_server.html#a39f228e3e14e6c2bc635aac5389a765c">clientEnd</a>();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_server.html#aaebe6d2c710231c7feefa001d5a3fa81">resendListToAdmins</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_server.html#ac93d80168367bcbe944783a7944bee3a">setClientCaption</a>(qint16 clientId, <span class="keyword">const</span> QString&amp; caption);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_server.html#a2025ba65a21c4569ae1630e01513b35b">setAdminTalkingWithClient</a>(qint16 clientId, qint16 adminId);</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="classdelta3_1_1_server.html#a8e850601f5a8a038474b0e67f2c9d5ee">   60</a></span>&#160;        <span class="keyword">inline</span> <a class="code" href="classdelta3_1_1_logger.html">Logger</a>&amp; <a class="code" href="classdelta3_1_1_server.html#a8e850601f5a8a038474b0e67f2c9d5ee">getLogger</a>() {<span class="keywordflow">return</span> _logger;}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> onNewConnection();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> timerEvent( QTimerEvent* event );</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classdelta3_1_1_logger.html">Logger</a> _logger;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        QTcpServer* _tcpServer;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="namespacedelta3.html#acfa6207fdb081b70f8d77082958a7cfe">Clients</a> _clients;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="class_client_info_storage.html">ClientInfoStorage</a> *_storage;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    };</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;QSettings&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;clientinfostorage.h&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;logger.h&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;defines.h&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span>delta3</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="namespacedelta3.html#acfa6207fdb081b70f8d77082958a7cfe">   29</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classdelta3_1_1_client.html">Client</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">typedef</span> QMap&lt;qint32,Client*&gt; <a class="code" href="namespacedelta3.html#acfa6207fdb081b70f8d77082958a7cfe">Clients</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classdelta3_1_1_server.html">   46</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classdelta3_1_1_server.html">Server</a>: <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        Q_OBJECT</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classdelta3_1_1_server.html#acdc382c37d3b3bd32e2ebd178c6eb37e">Server</a>(QObject* parent = 0);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="classdelta3_1_1_server.html#a070c7b4c00dc5186b3cf3ffce89b4d62">~Server</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classdelta3_1_1_server.html#aebd5ccefd5c9e8a43bcce1b0a27fad6d">start</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        QByteArray <a class="code" href="classdelta3_1_1_server.html#ab1fddb9cfc4457368a405f6345a55d47">listConnectedClients</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        Clients::iterator <a class="code" href="classdelta3_1_1_server.html#a994e457bc486b591fe8fbf772b94e552">searchClient</a>(qint32 clientId);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        Clients::iterator <a class="code" href="classdelta3_1_1_server.html#a39f228e3e14e6c2bc635aac5389a765c">clientEnd</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_server.html#aaebe6d2c710231c7feefa001d5a3fa81">resendListToAdmins</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_server.html#ac93d80168367bcbe944783a7944bee3a">setClientCaption</a>(qint16 clientId, <span class="keyword">const</span> QString&amp; caption);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_server.html#a2025ba65a21c4569ae1630e01513b35b">setAdminTalkingWithClient</a>(qint16 clientId, qint16 adminId);</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="code" href="classdelta3_1_1_server.html#a8e850601f5a8a038474b0e67f2c9d5ee">   61</a></span>&#160;        <span class="keyword">inline</span> <a class="code" href="classdelta3_1_1_logger.html">Logger</a>&amp; <a class="code" href="classdelta3_1_1_server.html#a8e850601f5a8a038474b0e67f2c9d5ee">getLogger</a>() {<span class="keywordflow">return</span> _logger;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        QSettings *<a class="code" href="classdelta3_1_1_server.html#ab6da6fda19fc87efe48fe8235c58def3">settings</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> onNewConnection();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> timerEvent( QTimerEvent* event );</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classdelta3_1_1_logger.html">Logger</a> _logger;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        QTcpServer* _tcpServer;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="namespacedelta3.html#acfa6207fdb081b70f8d77082958a7cfe">Clients</a> _clients;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="class_client_info_storage.html">ClientInfoStorage</a> *_storage;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    };</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:23 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 9 2012 02:19:19 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

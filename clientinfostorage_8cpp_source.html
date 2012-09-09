@@ -82,116 +82,120 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;clientinfostorage.h&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
-<div class="line"><a name="l00003"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a76190253123720eb65a99d3fbe633671">    3</a></span>&#160;<a class="code" href="class_client_info_storage.html#a76190253123720eb65a99d3fbe633671">ClientInfoStorage::ClientInfoStorage</a>(QObject *parent):</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    QObject(parent),</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    _changed(false)</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a7161e02ce0829bb5bb33e72c052b60db">    9</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7161e02ce0829bb5bb33e72c052b60db">ClientInfoStorage::updateClient</a>(<a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a> client)</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">lastSeen</a>=time(NULL);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">auto</span> i=_clients.find(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">caption</a>=QString(<span class="stringliteral">&quot;%1 (%2)&quot;</span>)</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                .arg(QHostAddress(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>).toString())</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                .arg(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        _clients.insert(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>,client);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    } <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        i-&gt;hash=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        i-&gt;device=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">device</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        i-&gt;ip=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        i-&gt;os=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    _changed=<span class="keyword">true</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#ae40dc7c40b83b54375615867caa48ea7">   29</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae40dc7c40b83b54375615867caa48ea7">ClientInfoStorage::updateCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">auto</span> i=_clients.find(hash);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    i-&gt;caption=caption;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    _changed=<span class="keyword">true</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a433d8e4450dec59c9e5161f31604e1a4">   38</a></span>&#160;QString <a class="code" href="class_client_info_storage.html#a433d8e4450dec59c9e5161f31604e1a4">ClientInfoStorage::getCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">auto</span> i=_clients.find(hash);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> i-&gt;caption;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#aad9ed03b7b6dd6227a1a6582e0e93982">   46</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#aad9ed03b7b6dd6227a1a6582e0e93982">ClientInfoStorage::setCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">auto</span> i=_clients.find(hash);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    i-&gt;caption=caption;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    _changed=<span class="keyword">true</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a7be36be6a2326a785213e0be2e36a914">   55</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7be36be6a2326a785213e0be2e36a914">ClientInfoStorage::save</a>()</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">if</span> (!_changed)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    QFile outFile(<a class="code" href="namespacedelta3.html#adad6a7609432d4dc0436573db3988ff4">delta3::STORAGE_FILE</a>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    outFile.open(QIODevice::WriteOnly);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QTextStream out(&amp;outFile);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    QByteArray lol;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i=_clients.begin();i!=_clients.end();i++)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        out &lt;&lt; QString(<span class="stringliteral">&quot;%1:%2:%3:%4:%5:%6\n&quot;</span>)</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;               .arg((QString)(i-&gt;hash.toHex()))</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;               .arg((i-&gt;ip).toString())</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;               .arg(i-&gt;os)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;               .arg(i-&gt;device)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;               .arg(i-&gt;lastSeen)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;               .arg(i-&gt;caption);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;     }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    outFile.close();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    _changed=<span class="keyword">false</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#ae02cbd99d0c7127d584436ad0a8c9190">   79</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae02cbd99d0c7127d584436ad0a8c9190">ClientInfoStorage::load</a>()</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    QFile inputFile(<a class="code" href="namespacedelta3.html#adad6a7609432d4dc0436573db3988ff4">delta3::STORAGE_FILE</a>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span> (!inputFile.exists())</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    inputFile.open(QIODevice::ReadOnly);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    QString line;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">while</span> (!inputFile.atEnd())</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        line=inputFile.readLine();</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">auto</span> params=line.split(<span class="stringliteral">&quot;:&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">if</span> (params.size()!=6)</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a> info;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>=QByteArray::fromHex(params[0].toLocal8Bit());</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>=QHostAddress(params[1]);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>=params[2];</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">device</a>=params[3];</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">lastSeen</a>=params[4].toInt();</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">caption</a>=params[5].trimmed();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        _clients.insert(info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>,info);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="comment">//qDebug() &lt;&lt; &quot;Client&quot; &lt;&lt; info.caption &lt;&lt; &quot;loaded&quot;;</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    inputFile.close();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;server.h&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a76190253123720eb65a99d3fbe633671">    4</a></span>&#160;<a class="code" href="class_client_info_storage.html#a76190253123720eb65a99d3fbe633671">ClientInfoStorage::ClientInfoStorage</a>(QObject *parent):</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    QObject(parent),</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    _changed(false)</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a7161e02ce0829bb5bb33e72c052b60db">   10</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7161e02ce0829bb5bb33e72c052b60db">ClientInfoStorage::updateClient</a>(<a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a> client)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">lastSeen</a>=time(NULL);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">auto</span> i=_clients.find(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">caption</a>=QString(<span class="stringliteral">&quot;%1 (%2)&quot;</span>)</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                .arg(QHostAddress(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>).toString())</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                .arg(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        _clients.insert(client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>,client);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    } <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        i-&gt;hash=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        i-&gt;device=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">device</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        i-&gt;ip=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        i-&gt;os=client.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    _changed=<span class="keyword">true</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#ae40dc7c40b83b54375615867caa48ea7">   30</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae40dc7c40b83b54375615867caa48ea7">ClientInfoStorage::updateCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">auto</span> i=_clients.find(hash);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    i-&gt;caption=caption;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    _changed=<span class="keyword">true</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a433d8e4450dec59c9e5161f31604e1a4">   39</a></span>&#160;QString <a class="code" href="class_client_info_storage.html#a433d8e4450dec59c9e5161f31604e1a4">ClientInfoStorage::getCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">auto</span> i=_clients.find(hash);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> i-&gt;caption;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#aad9ed03b7b6dd6227a1a6582e0e93982">   47</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#aad9ed03b7b6dd6227a1a6582e0e93982">ClientInfoStorage::setCaption</a>(<span class="keyword">const</span> QByteArray&amp; hash, <span class="keyword">const</span> QString&amp; caption)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">auto</span> i=_clients.find(hash);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">if</span> (i==_clients.end())</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    i-&gt;caption=caption;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    _changed=<span class="keyword">true</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#a7be36be6a2326a785213e0be2e36a914">   56</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#a7be36be6a2326a785213e0be2e36a914">ClientInfoStorage::save</a>()</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">if</span> (!_changed)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QFile outFile(<a class="code" href="class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4">settings</a>()-&gt;value(<span class="stringliteral">&quot;general/datafile&quot;</span>, <a class="code" href="namespacedelta3.html#adad6a7609432d4dc0436573db3988ff4">delta3::STORAGE_FILE</a>).toString());</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    outFile.open(QIODevice::WriteOnly);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QTextStream out(&amp;outFile);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i=_clients.begin();i!=_clients.end();i++)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        out &lt;&lt; QString(<span class="stringliteral">&quot;%1:%2:%3:%4:%5:%6\n&quot;</span>)</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;               .arg((QString)(i-&gt;hash.toHex()))</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;               .arg((i-&gt;ip).toString())</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;               .arg(i-&gt;os)</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;               .arg(i-&gt;device)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;               .arg(i-&gt;lastSeen)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;               .arg(i-&gt;caption);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;     }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    outFile.close();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    _changed=<span class="keyword">false</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#ae02cbd99d0c7127d584436ad0a8c9190">   78</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_client_info_storage.html#ae02cbd99d0c7127d584436ad0a8c9190">ClientInfoStorage::load</a>()</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;{</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    QFile inputFile(<a class="code" href="class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4">settings</a>()-&gt;value(<span class="stringliteral">&quot;general/datafile&quot;</span>, <a class="code" href="namespacedelta3.html#adad6a7609432d4dc0436573db3988ff4">delta3::STORAGE_FILE</a>).toString());</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">if</span> (!inputFile.exists())</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    inputFile.open(QIODevice::ReadOnly);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    QString line;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">while</span> (!inputFile.atEnd())</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        line=inputFile.readLine();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">auto</span> params=line.split(<span class="stringliteral">&quot;:&quot;</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">if</span> (params.size()!=6)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="struct_client_info_storage_1_1_client_info.html">ClientInfo</a> info;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>=QByteArray::fromHex(params[0].toLocal8Bit());</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a65dde14f8b127c65abd3736b0aba649a">ip</a>=QHostAddress(params[1]);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab8e4198c51834a40920a137ec69f8272">os</a>=params[2];</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a3b9fec64531259b699abf6f69985e68c">device</a>=params[3];</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#acc5cbbcad841bb1e4cc93f0a0f8c7187">lastSeen</a>=params[4].toInt();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#ab53b9b5a51c8e24d68223a98d2dcf1fd">caption</a>=params[5].trimmed();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        _clients.insert(info.<a class="code" href="struct_client_info_storage_1_1_client_info.html#a147877610ebf354c2e73735d4e5290aa">hash</a>,info);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="comment">//qDebug() &lt;&lt; &quot;Client&quot; &lt;&lt; info.caption &lt;&lt; &quot;loaded&quot;;</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    inputFile.close();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="code" href="class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4">  108</a></span>&#160;QSettings* <a class="code" href="class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4">ClientInfoStorage::settings</a>()</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;{</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">return</span> ((<a class="code" href="classdelta3_1_1_server.html">delta3::Server</a>*)(parent()))-&gt;settings();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:23 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 9 2012 02:19:19 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

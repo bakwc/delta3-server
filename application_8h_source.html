@@ -85,28 +85,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;QCoreApplication&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QTextCodec&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>delta3</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>Server;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="classdelta3_1_1_application.html">   20</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classdelta3_1_1_application.html">Application</a>: <span class="keyword">public</span> QCoreApplication</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        Q_OBJECT</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classdelta3_1_1_application.html#abefb1a23db28d9fa45290a0e4e2b54d3">Application</a>(<span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classdelta3_1_1_application.html#a51d36f321d7c34165b56ac9244c32981">~Application</a> ();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classdelta3_1_1_application.html#a7a3e8085630646effbf7d51e1cf87dc0">start</a>();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classdelta3_1_1_server.html">Server</a> *_server;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    };</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QSettings&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>delta3</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">class </span>Server;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="classdelta3_1_1_application.html">   21</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classdelta3_1_1_application.html">Application</a>: <span class="keyword">public</span> QCoreApplication</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        Q_OBJECT</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classdelta3_1_1_application.html#abefb1a23db28d9fa45290a0e4e2b54d3">Application</a>(<span class="keywordtype">int</span>&amp; argc, <span class="keywordtype">char</span>* argv[]);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classdelta3_1_1_application.html#a51d36f321d7c34165b56ac9244c32981">~Application</a> ();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classdelta3_1_1_application.html#a7a3e8085630646effbf7d51e1cf87dc0">start</a>();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        QSettings* <a class="code" href="classdelta3_1_1_application.html#a3f19b10998a884cb8554ff2a28eb8922">getSettings</a>();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classdelta3_1_1_server.html">Server</a> *_server;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        QSettings *_settings;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:23 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 9 2012 02:19:19 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

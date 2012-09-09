@@ -10,5 +10,6 @@ var searchData=
   ['setclientcaption',['setClientCaption',['../classdelta3_1_1_server.html#ac93d80168367bcbe944783a7944bee3a',1,'delta3::Server']]],
   ['setdefaultstream',['setDefaultStream',['../classdelta3_1_1_logger.html#a88c1eb12f87451e5042aaf5d0798939e',1,'delta3::Logger']]],
   ['setseen',['setSeen',['../classdelta3_1_1_client.html#aed628c6d525099d999f4e9b8263979eb',1,'delta3::Client']]],
+  ['settings',['settings',['../class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4',1,'ClientInfoStorage::settings()'],['../classdelta3_1_1_server.html#ab6da6fda19fc87efe48fe8235c58def3',1,'delta3::Server::settings()']]],
   ['start',['start',['../classdelta3_1_1_application.html#a7a3e8085630646effbf7d51e1cf87dc0',1,'delta3::Application::start()'],['../classdelta3_1_1_server.html#aebd5ccefd5c9e8a43bcce1b0a27fad6d',1,'delta3::Server::start()']]]
 ];

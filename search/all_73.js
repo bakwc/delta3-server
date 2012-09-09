@@ -11,6 +11,7 @@ var searchData=
   ['setclientcaption',['setClientCaption',['../classdelta3_1_1_server.html#ac93d80168367bcbe944783a7944bee3a',1,'delta3::Server']]],
   ['setdefaultstream',['setDefaultStream',['../classdelta3_1_1_logger.html#a88c1eb12f87451e5042aaf5d0798939e',1,'delta3::Logger']]],
   ['setseen',['setSeen',['../classdelta3_1_1_client.html#aed628c6d525099d999f4e9b8263979eb',1,'delta3::Client']]],
+  ['settings',['settings',['../class_client_info_storage.html#ad02aeccd75bc7aa491171421c4d235b4',1,'ClientInfoStorage::settings()'],['../classdelta3_1_1_server.html#ab6da6fda19fc87efe48fe8235c58def3',1,'delta3::Server::settings()']]],
   ['st_5fadmin',['ST_ADMIN',['../namespacedelta3.html#a2dba5e4727ab77c424fbbd2a1256bb79a53de6e72b90ab442cefda2e6835a01a9',1,'delta3']]],
   ['st_5fclient',['ST_CLIENT',['../namespacedelta3.html#a2dba5e4727ab77c424fbbd2a1256bb79adf160341a4ececb36581e5dfc2949a18',1,'delta3']]],
   ['st_5fconnected',['ST_CONNECTED',['../namespacedelta3.html#a2dba5e4727ab77c424fbbd2a1256bb79a4608d89934b9cb2a29426ea9c7593de2',1,'delta3']]],

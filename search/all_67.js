@@ -20,5 +20,6 @@ var searchData=
   ['getpacketlength',['getPacketLength',['../namespacedelta3.html#a47180e559d7286be40e26c78a5acb922',1,'delta3']]],
   ['getprotoid',['getProtoId',['../namespacedelta3.html#ae5315dc0795c333817d928113c75e4b2',1,'delta3']]],
   ['getprotoversion',['getProtoVersion',['../namespacedelta3.html#ae522462a748d2a083dc21878bd19ff99',1,'delta3']]],
+  ['getsettings',['getSettings',['../classdelta3_1_1_application.html#a3f19b10998a884cb8554ff2a28eb8922',1,'delta3::Application']]],
   ['getstatus',['getStatus',['../classdelta3_1_1_client.html#a6770caa46d3dc0533a06027125565702',1,'delta3::Client']]]
 ];

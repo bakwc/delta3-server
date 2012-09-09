@@ -106,12 +106,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac93d80168367bcbe944783a7944bee3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_server.html#ac93d80168367bcbe944783a7944bee3a">setClientCaption</a> (qint16 clientId, const QString &amp;caption)</td></tr>
 <tr class="memitem:a2025ba65a21c4569ae1630e01513b35b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_server.html#a2025ba65a21c4569ae1630e01513b35b">setAdminTalkingWithClient</a> (qint16 clientId, qint16 adminId)</td></tr>
 <tr class="memitem:a8e850601f5a8a038474b0e67f2c9d5ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdelta3_1_1_logger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_server.html#a8e850601f5a8a038474b0e67f2c9d5ee">getLogger</a> ()</td></tr>
+<tr class="memitem:ab6da6fda19fc87efe48fe8235c58def3"><td class="memItemLeft" align="right" valign="top">QSettings *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_server.html#ab6da6fda19fc87efe48fe8235c58def3">settings</a> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Основной класс, обеспечивающий открытие порта и приём входящих соединений.</p>
 <p>Внутри него хранится ассоциативный массив клиентов, каждый раз при подключении нового клиента он размещается в этом массиве. Так же в сервере реализован метод, отвечающий за проверку связи с клиентами (отправляющий пинг запросы), и некоторые вспомогательные функции, возвращающие информацию, которой обладает сервер и которую по смыслу лучше реализовать здесь. Это функция, возвращающая список клиентов в специальном формате, функция возвращающая клиента по его id, функция пересылающая список клиентов администраторам, и некоторые другие. </p>
 
-<p>Definition at line <a class="el" href="server_8h_source.html#l00045">45</a> of file <a class="el" href="server_8h_source.html">server.h</a>.</p>
+<p>Definition at line <a class="el" href="server_8h_source.html#l00046">46</a> of file <a class="el" href="server_8h_source.html">server.h</a>.</p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="acdc382c37d3b3bd32e2ebd178c6eb37e"></a>
 <div class="memitem">
@@ -144,7 +145,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00031">31</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00032">32</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -162,7 +163,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00035">35</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00036">36</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -179,7 +180,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00056">56</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00052">52</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -197,7 +198,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00080">80</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00075">75</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -214,7 +215,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00085">85</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00080">80</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -231,7 +232,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00124">124</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00118">118</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -259,7 +260,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00133">133</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00126">126</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -287,7 +288,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8cpp_source.html#l00143">143</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00136">136</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -312,7 +313,24 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="server_8h_source.html#l00060">60</a> of file <a class="el" href="server_8h_source.html">server.h</a>.</p>
+<p>Definition at line <a class="el" href="server_8h_source.html#l00061">61</a> of file <a class="el" href="server_8h_source.html">server.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab6da6fda19fc87efe48fe8235c58def3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSettings * delta3::Server::settings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00144">144</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
 
 </div>
 </div>
@@ -323,7 +341,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:23 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 9 2012 02:19:19 for Delta3 Server by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
